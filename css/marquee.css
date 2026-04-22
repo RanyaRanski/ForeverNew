@@ -1,0 +1,35 @@
+/* ===== Marquee ===== */
+.marquee {
+  background: var(--forest);
+  color: var(--lime);
+  padding: 1.25rem 0;
+  overflow: hidden;
+  white-space: nowrap;
+  border-top: 1px solid color-mix(in oklab, var(--lime) 20%, transparent);
+  border-bottom: 1px solid color-mix(in oklab, var(--lime) 20%, transparent);
+}
+
+.marquee-track {
+  display: flex;
+  gap: 4rem;
+  width: max-content;
+  animation: marquee 30s linear infinite;
+}
+
+.marquee-group {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.875rem, 4vw, 2.25rem);
+  text-transform: uppercase;
+}
+
+.marquee-group .dot {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 9999px;
+  background: var(--lime);
+  flex-shrink: 0;
+}

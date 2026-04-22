@@ -1,0 +1,78 @@
+/* ===== About ===== */
+.about { padding: 2.5rem 1.5rem; }
+
+@media (min-width: 640px) {
+  .about { padding: 3rem 1.5rem; }
+}
+
+.about-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  margin-bottom: 2rem;
+  align-items: flex-start;
+}
+
+.about-intro h2 {
+  font-size: clamp(2.25rem, 5vw, 3.75rem);
+  color: var(--forest);
+}
+
+.about-intro-right {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: color-mix(in oklab, var(--forest) 75%, transparent);
+}
+
+@media (min-width: 1024px) {
+  .about-intro { flex-direction: row; }
+  .about-intro-left { width: 40%; }
+  .about-intro-right { width: 60%; }
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: color-mix(in oklab, var(--forest) 10%, transparent);
+  border-radius: 1.5rem;
+  overflow: hidden;
+  border: 1px solid color-mix(in oklab, var(--forest) 10%, transparent);
+}
+
+@media (min-width: 1024px) {
+  .stats { grid-template-columns: repeat(4, 1fr); }
+}
+
+.stat {
+  background: var(--cream);
+  padding: 2rem;
+  transition: background 0.2s;
+}
+.stat:hover { background: var(--lime); }
+
+@media (min-width: 640px) {
+  .stat { padding: 2.5rem; }
+}
+
+.stat-value {
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 4vw, 3.75rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--forest);
+  margin-bottom: 0.75rem;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-weight: 500;
+  color: color-mix(in oklab, var(--forest) 60%, transparent);
+  transition: color 0.2s;
+}
+.stat:hover .stat-label { color: var(--forest); }

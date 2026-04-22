@@ -1,0 +1,381 @@
+/* ===== Product Detail Page ===== */
+.product-page {
+  padding: 6rem 0 3rem;
+  background: var(--cream);
+}
+
+.product-page .breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--forest) 60%, transparent);
+  margin-bottom: 2.5rem;
+}
+.product-page .breadcrumb a:hover { color: var(--mint); }
+.product-page .breadcrumb .sep { opacity: 0.4; }
+
+.product-hero {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+@media (min-width: 900px) {
+  .product-hero { grid-template-columns: 1.1fr 1fr; gap: 5rem; }
+}
+
+.product-hero-image {
+  border-radius: 2rem;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  box-shadow: var(--shadow-elegant);
+  background: var(--muted);
+}
+.product-hero-image img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+
+.product-hero-content .eyebrow {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--mint);
+  margin-bottom: 1.25rem;
+}
+
+.product-hero-content h1 {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  letter-spacing: -0.04em;
+  margin-bottom: 1.5rem;
+  color: var(--forest);
+  overflow-wrap: break-word;
+}
+.product-hero-content h1 .italic {
+  font-style: italic;
+  color: var(--mint);
+}
+
+.product-hero-content .lead {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: color-mix(in oklab, var(--forest) 80%, transparent);
+  margin-bottom: 2rem;
+}
+
+.product-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+/* ----- Items grid ----- */
+.product-items {
+  margin-top: 2rem;
+}
+.product-items h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin-bottom: 0.75rem;
+  color: var(--forest);
+}
+.product-items .section-sub {
+  color: color-mix(in oklab, var(--forest) 65%, transparent);
+  margin-bottom: 3rem;
+  max-width: 36rem;
+}
+
+.items-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+@media (min-width: 640px) { .items-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .items-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.item-card {
+  background: white;
+  border: 1px solid color-mix(in oklab, var(--forest) 8%, transparent);
+  border-radius: 1.25rem;
+  padding: 1.75rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.item-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-glow);
+  border-color: var(--mint);
+}
+
+.item-card .item-num {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  color: var(--mint);
+  margin-bottom: 0.75rem;
+}
+.item-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+  color: var(--forest);
+}
+.item-card p {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: color-mix(in oklab, var(--forest) 70%, transparent);
+}
+
+/* ----- Benefits row ----- */
+.product-benefits {
+  margin-top: 2.5rem;
+  padding: 3rem;
+  background: var(--forest);
+  color: var(--cream);
+  border-radius: 2rem;
+}
+.product-benefits h2 {
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  margin-bottom: 2rem;
+  color: var(--cream);
+}
+.product-benefits h2 .italic { color: var(--lime); font-style: italic; }
+
+.benefits-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+@media (min-width: 700px) { .benefits-list { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .benefits-list { grid-template-columns: repeat(4, 1fr); } }
+
+.benefit-item {
+  border-top: 1px solid color-mix(in oklab, var(--cream) 20%, transparent);
+  padding-top: 1.25rem;
+}
+.benefit-item .benefit-num {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  color: var(--lime);
+  margin-bottom: 0.5rem;
+}
+.benefit-item h4 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  color: var(--cream);
+}
+.benefit-item p {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: color-mix(in oklab, var(--cream) 70%, transparent);
+}
+
+/* ----- CTA back ----- */
+.product-cta-back {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+/* ----- Aloe page spacing fix ----- */
+.product-page.aloe-page {
+  padding-top: 6.5rem;
+}
+
+.product-page.nutrition-page {
+  padding-top: 6.5rem;
+}
+
+.product-page.beauty-page {
+  padding-top: 6.5rem;
+}
+
+.aloe-page .product-hero {
+  gap: 2rem;
+  margin-bottom: 1.25rem;
+}
+
+.nutrition-page .product-hero {
+  gap: 2rem;
+  margin-bottom: 1.25rem;
+}
+
+.beauty-page .product-hero {
+  gap: 2rem;
+  margin-bottom: 1.25rem;
+}
+
+.aloe-page .aloe-story {
+  margin-top: 0;
+}
+
+.nutrition-page .aloe-story {
+  margin-top: 0;
+}
+
+.beauty-page .aloe-story {
+  margin-top: 0;
+}
+
+.aloe-page .breadcrumb {
+  margin-bottom: 1.5rem;
+}
+
+.nutrition-page .breadcrumb {
+  margin-bottom: 1.5rem;
+}
+
+.beauty-page .breadcrumb {
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 900px) {
+  .aloe-page .product-hero {
+    grid-template-columns: 1fr 1fr;
+    gap: 2.25rem;
+  }
+
+  .nutrition-page .product-hero {
+    grid-template-columns: 1fr 1fr;
+    gap: 2.25rem;
+  }
+
+  .beauty-page .product-hero {
+    grid-template-columns: 1fr 1fr;
+    gap: 2.25rem;
+  }
+
+  .aloe-page .product-hero-image {
+    aspect-ratio: 4 / 3;
+    max-height: 560px;
+  }
+
+  .nutrition-page .product-hero-image {
+    aspect-ratio: 4 / 3;
+    max-height: 560px;
+  }
+
+  .beauty-page .product-hero-image {
+    aspect-ratio: 4 / 3;
+    max-height: 560px;
+  }
+
+  .aloe-page .product-hero-content h1 {
+    font-size: clamp(2.25rem, 4.6vw, 3.9rem);
+    margin-bottom: 1rem;
+  }
+
+  .nutrition-page .product-hero-content h1 {
+    font-size: clamp(2.25rem, 4.6vw, 3.9rem);
+    margin-bottom: 1rem;
+  }
+
+  .beauty-page .product-hero-content h1 {
+    font-size: clamp(2.25rem, 4.6vw, 3.9rem);
+    margin-bottom: 1rem;
+  }
+
+  .aloe-page .product-hero-content .lead {
+    font-size: 1.04rem;
+    margin-bottom: 0;
+  }
+
+  .nutrition-page .product-hero-content .lead {
+    font-size: 1.04rem;
+    margin-bottom: 0;
+  }
+
+  .beauty-page .product-hero-content .lead {
+    font-size: 1.04rem;
+    margin-bottom: 0;
+  }
+}
+
+/* ----- Aloe long read ----- */
+.aloe-story {
+  margin: 0.5rem 0 2rem;
+  display: grid;
+  gap: 2rem;
+}
+
+.story-block {
+  background: white;
+  border: 1px solid color-mix(in oklab, var(--forest) 8%, transparent);
+  border-radius: 1.5rem;
+  padding: 1.75rem;
+}
+
+.story-block h2 {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  color: var(--forest);
+  margin-bottom: 1rem;
+}
+
+.story-block h3 {
+  font-size: 1.1rem;
+  color: var(--forest);
+  margin: 1rem 0 0.5rem;
+}
+
+.story-block p {
+  font-size: 0.98rem;
+  line-height: 1.7;
+  color: color-mix(in oklab, var(--forest) 80%, transparent);
+}
+
+.story-quote {
+  margin: 0;
+  padding: 1.25rem;
+  border-left: 4px solid var(--mint);
+  background: color-mix(in oklab, var(--mint) 8%, white);
+  border-radius: 0.75rem;
+  font-style: italic;
+  line-height: 1.7;
+  color: var(--forest);
+}
+
+.story-source {
+  margin-top: 0.75rem;
+  font-size: 0.82rem !important;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--forest) 70%, transparent) !important;
+}
+
+.story-list {
+  margin: 0.75rem 0 0;
+  padding-left: 1.15rem;
+  display: grid;
+  gap: 0.65rem;
+}
+
+.story-list li {
+  line-height: 1.65;
+  color: color-mix(in oklab, var(--forest) 82%, transparent);
+}
+
+.story-ordered {
+  margin: 0.75rem 0 0;
+  padding-left: 1.25rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.story-ordered li {
+  line-height: 1.65;
+  color: color-mix(in oklab, var(--forest) 82%, transparent);
+}
+
+.story-final {
+  margin-top: 1rem;
+  font-weight: 700;
+  color: var(--forest) !important;
+}
