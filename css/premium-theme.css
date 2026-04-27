@@ -4,11 +4,49 @@
    ============================================================ */
 
 .home-page {
-  background:
-    radial-gradient(120% 80% at 50% -10%, color-mix(in oklab, var(--mint) 22%, transparent) 0%, transparent 60%),
-    radial-gradient(100% 90% at 100% 120%, color-mix(in oklab, var(--lime) 12%, transparent) 0%, transparent 55%),
-    #06080a;
+  background: transparent;
   color: var(--cream);
+}
+
+.home-page .site-video-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.home-page .site-video-bg video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(1.12) brightness(0.74) contrast(1.08);
+}
+
+.home-page .site-video-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      to bottom,
+      color-mix(in oklab, #050607 54%, transparent) 0%,
+      color-mix(in oklab, #050607 28%, transparent) 42%,
+      color-mix(in oklab, #050607 58%, transparent) 100%
+    );
+}
+
+.home-page .site-header {
+  z-index: 210;
+}
+
+.home-page .float-messengers {
+  z-index: 220;
+}
+
+.home-page main,
+.home-page #toastRoot {
+  position: relative;
+  z-index: 2;
 }
 
 .home-page .accent-mint {
@@ -25,6 +63,55 @@
 
 .home-page main > section {
   position: relative;
+}
+
+.home-page .page-video-main {
+  position: relative;
+  isolation: isolate;
+}
+
+.home-page .page-video-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.home-page .page-video-bg video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(1.08) brightness(0.76) contrast(1.06);
+}
+
+.home-page .page-video-tint {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      to bottom,
+      color-mix(in oklab, #050607 62%, transparent) 0%,
+      color-mix(in oklab, #050607 40%, transparent) 38%,
+      color-mix(in oklab, #050607 68%, transparent) 100%
+    ),
+    radial-gradient(120% 120% at 50% 8%, color-mix(in oklab, var(--mint) 10%, transparent), transparent 62%);
+}
+
+.home-page .page-video-main > :not(.page-video-bg):not(.page-video-tint) {
+  position: relative;
+  z-index: 2;
+}
+
+.home-page .hero {
+  background: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-page .page-video-bg video {
+    display: none;
+  }
 }
 
 .home-page .cine-section {
@@ -69,9 +156,62 @@
 }
 
 .home-page .cine-about {
+  max-width: none;
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: clamp(1rem, 4vw, 2.5rem);
+  padding-right: clamp(1rem, 4vw, 2.5rem);
+  border-radius: 0;
+  border-left: none;
+  border-right: none;
   background:
-    radial-gradient(110% 70% at 20% 0%, color-mix(in oklab, var(--mint) 18%, transparent), transparent 62%),
-    linear-gradient(145deg, #121922 0%, #0d1218 55%, #111823 100%);
+    linear-gradient(
+      115deg,
+      rgba(6, 9, 12, 0.76) 0%,
+      rgba(6, 9, 12, 0.64) 46%,
+      rgba(6, 9, 12, 0.56) 100%
+    );
+}
+
+.home-page .cine-about::before {
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(5, 6, 7, 0.26) 0%,
+      rgba(5, 6, 7, 0.34) 45%,
+      rgba(5, 6, 7, 0.48) 100%
+    );
+}
+
+.home-page .cine-about .about-intro {
+  max-width: 1280px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  background: color-mix(in oklab, #06090c 26%, transparent);
+  border: 1px solid color-mix(in oklab, var(--cream) 16%, transparent);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  backdrop-filter: blur(2px);
+}
+
+.home-page .cine-about .stats {
+  max-width: 1280px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  background: color-mix(in oklab, #06090c 24%, transparent);
+  border-color: color-mix(in oklab, var(--cream) 16%, transparent);
+}
+
+.home-page .cine-about .stat {
+  background: color-mix(in oklab, #0a1118 36%, transparent);
+  border-color: color-mix(in oklab, var(--cream) 14%, transparent);
+}
+
+.home-page .cine-about .stat:hover {
+  background: color-mix(in oklab, #111a24 44%, transparent);
 }
 
 .home-page .cine-products {
@@ -165,13 +305,37 @@
 
 /* ===== Products ===== */
 .home-page .products {
-  background: color-mix(in oklab, #0a0e11 90%, transparent);
-  border-top-left-radius: 2.5rem;
-  border-top-right-radius: 2.5rem;
-  border-bottom-left-radius: 2.5rem;
-  border-bottom-right-radius: 2.5rem;
-  margin-left: 1.5rem;
-  margin-right: 1.5rem;
+  max-width: none;
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: clamp(1rem, 4vw, 2.5rem);
+  padding-right: clamp(1rem, 4vw, 2.5rem);
+  background: transparent !important;
+  border-radius: 0;
+  border-left: none;
+  border-right: none;
+}
+
+.home-page .products .container,
+.home-page .products-head {
+  background: transparent !important;
+}
+
+.home-page .product-card,
+.home-page .product-image,
+.home-page .product-body {
+  background: transparent !important;
+}
+
+.home-page .product-card {
+  border-color: color-mix(in oklab, var(--cream) 20%, transparent);
+  box-shadow: none;
+}
+
+.home-page .products .btn-lime,
+.home-page .products .product-foot {
+  background: transparent !important;
 }
 
 .home-page .products.cine-section {
@@ -179,8 +343,11 @@
 }
 
 .home-page .products .container {
-  padding-left: 2rem;
-  padding-right: 2rem;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .home-page .products-head h2 {
@@ -228,14 +395,32 @@
 
 /* ===== Nutrition ===== */
 .home-page .nutrition {
+  max-width: none;
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: clamp(1rem, 4vw, 2.5rem);
+  padding-right: clamp(1rem, 4vw, 2.5rem);
   padding-top: 8rem;
   padding-bottom: 8rem;
+  border-radius: 0;
+  border-left: none;
+  border-right: none;
 }
 
 .home-page .nutrition-card {
-  background: color-mix(in oklab, #0d1216 94%, transparent);
+  background:
+    linear-gradient(
+      115deg,
+      rgba(7, 10, 12, 0.86) 0%,
+      rgba(7, 10, 12, 0.72) 48%,
+      rgba(7, 10, 12, 0.82) 100%
+    );
   border-color: color-mix(in oklab, var(--cream) 18%, transparent);
   border-radius: 2rem;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .home-page .nutrition-left h3,
@@ -249,7 +434,7 @@
 }
 
 .home-page .nutrition-topic {
-  background: color-mix(in oklab, #141a20 94%, transparent);
+  background: color-mix(in oklab, #141a20 76%, transparent);
   border-color: color-mix(in oklab, var(--cream) 14%, transparent);
 }
 
@@ -260,8 +445,26 @@
 
 /* ===== Business ===== */
 .home-page .business {
+  max-width: none;
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: clamp(1rem, 4vw, 2.5rem);
+  padding-right: clamp(1rem, 4vw, 2.5rem);
   padding-top: 8rem;
   padding-bottom: 8rem;
+  background:
+    linear-gradient(
+      115deg,
+      rgba(7, 10, 12, 0.86) 0%,
+      rgba(7, 10, 12, 0.74) 48%,
+      rgba(7, 10, 12, 0.84) 100%
+    );
+  border-radius: 0;
+  border-left: none;
+  border-right: none;
+  border-top: 1px solid color-mix(in oklab, var(--cream) 12%, transparent);
+  border-bottom: 1px solid color-mix(in oklab, var(--cream) 12%, transparent);
 }
 
 .home-page .business-intro-text h2,
@@ -272,6 +475,21 @@
 .home-page .business-intro-text p,
 .home-page .benefit p {
   color: color-mix(in oklab, var(--cream) 74%, transparent);
+}
+
+.home-page .business-intro-text {
+  background: color-mix(in oklab, #0a1117 22%, transparent);
+  border: 1px solid color-mix(in oklab, var(--cream) 14%, transparent);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+}
+
+.home-page .business-intro,
+.home-page .benefits,
+.home-page .steps {
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .home-page .business-intro-image {
@@ -308,8 +526,26 @@
 
 /* ===== Testimonials ===== */
 .home-page .testimonials {
+  max-width: none;
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: clamp(1rem, 4vw, 2.5rem);
+  padding-right: clamp(1rem, 4vw, 2.5rem);
   padding-top: 8rem;
   padding-bottom: 8rem;
+  background:
+    linear-gradient(
+      115deg,
+      rgba(7, 10, 12, 0.86) 0%,
+      rgba(7, 10, 12, 0.74) 48%,
+      rgba(7, 10, 12, 0.84) 100%
+    );
+  border-radius: 0;
+  border-left: none;
+  border-right: none;
+  border-top: 1px solid color-mix(in oklab, var(--cream) 12%, transparent);
+  border-bottom: 1px solid color-mix(in oklab, var(--cream) 12%, transparent);
 }
 
 .home-page .testimonials-head h2,
@@ -318,8 +554,15 @@
 }
 
 .home-page .review {
-  background: color-mix(in oklab, #11181e 95%, transparent);
+  background: color-mix(in oklab, #11181e 84%, transparent);
   border-color: color-mix(in oklab, var(--cream) 14%, transparent);
+}
+
+.home-page .testimonials-head,
+.home-page .reviews {
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .home-page .review:hover {
@@ -413,6 +656,12 @@
     border-radius: 1.25rem;
   }
 
+  .home-page .cine-about {
+    border-radius: 0;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
   .home-page .products {
     margin-left: 0;
     margin-right: 0;
@@ -420,13 +669,22 @@
   }
 
   .home-page .products .container {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+    padding-left: 0;
+    padding-right: 0;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .home-page .cine-section::before { background: color-mix(in oklab, #050607 52%, transparent); }
+  .home-page .cine-about::before {
+    background:
+      linear-gradient(
+        to bottom,
+        rgba(5, 6, 7, 0.3) 0%,
+        rgba(5, 6, 7, 0.38) 45%,
+        rgba(5, 6, 7, 0.52) 100%
+      );
+  }
 }
 
 /* ===== ForeverNew custom hero lead elements ===== */
@@ -540,15 +798,15 @@
 }
 
 .home-page .social-proof-cta-inner {
-  border: 1px solid color-mix(in oklab, var(--cream) 18%, transparent);
+  border: 1px solid color-mix(in oklab, var(--cream) 12%, transparent);
   background:
     linear-gradient(
       145deg,
-      color-mix(in oklab, #121a22 94%, transparent) 0%,
-      color-mix(in oklab, #0d141a 96%, transparent) 60%,
-      color-mix(in oklab, #101a24 94%, transparent) 100%
+      color-mix(in oklab, #121a22 78%, transparent) 0%,
+      color-mix(in oklab, #0d141a 82%, transparent) 60%,
+      color-mix(in oklab, #101a24 78%, transparent) 100%
     );
-  box-shadow: 0 28px 70px -45px color-mix(in oklab, #000 82%, transparent);
+  box-shadow: 0 22px 56px -44px color-mix(in oklab, #000 70%, transparent);
 }
 
 .home-page .social-proof-cta-text h3 {
@@ -662,8 +920,7 @@
   .nav-cta,
   .nav-catalog-btn,
   .mobile-cta,
-  .intent-tab,
-  .float-btn
+  .intent-tab
 ) {
   border: 1px solid var(--btn-unified-border);
   background:
@@ -689,8 +946,7 @@
   .nav-cta,
   .nav-catalog-btn,
   .mobile-cta,
-  .intent-tab,
-  .float-btn
+  .intent-tab
 ):hover,
 .home-page :is(
   .btn,
@@ -705,8 +961,7 @@
   .nav-cta,
   .nav-catalog-btn,
   .mobile-cta,
-  .intent-tab,
-  .float-btn
+  .intent-tab
 ):focus-visible {
   background:
     linear-gradient(
@@ -747,8 +1002,175 @@
   color: var(--btn-unified-text) !important;
 }
 
+/* ===== Messenger buttons: match nav button style ===== */
+.home-page .float-btn {
+  border: 1px solid var(--btn-unified-border) !important;
+  background:
+    linear-gradient(
+      180deg,
+      var(--btn-unified-bg-start) 0%,
+      var(--btn-unified-bg-end) 100%
+    ) !important;
+  color: var(--btn-unified-text) !important;
+  box-shadow: var(--btn-unified-shadow) !important;
+}
+
+.home-page .float-wa {
+  background:
+    linear-gradient(
+      180deg,
+      var(--btn-unified-bg-start) 0%,
+      var(--btn-unified-bg-end) 100%
+    ) !important;
+}
+
+.home-page .float-tg {
+  background:
+    linear-gradient(
+      180deg,
+      var(--btn-unified-bg-start) 0%,
+      var(--btn-unified-bg-end) 100%
+    ) !important;
+}
+
+.home-page .float-btn:hover,
+.home-page .float-btn:focus-visible {
+  background:
+    linear-gradient(
+      180deg,
+      var(--btn-unified-bg-hover-start) 0%,
+      var(--btn-unified-bg-hover-end) 100%
+    ) !important;
+  color: var(--btn-unified-text-hover) !important;
+  border-color: var(--btn-unified-border-hover) !important;
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, var(--cream) 14%, transparent),
+    0 12px 24px -18px color-mix(in oklab, #000 90%, transparent) !important;
+  transform: translateY(-1px);
+}
+
+/* ===== Forever yellow headings ===== */
+.home-page :is(
+  .hero-title,
+  .about-intro h2,
+  .products-head h2,
+  .nutrition-left h3,
+  .business-intro-text h2,
+  .steps h3,
+  .testimonials-head h2,
+  .social-proof-cta-text h3,
+  .contact h2
+) {
+  color: var(--lime) !important;
+}
+
+
 .home-page .btn-partner {
   text-transform: none;
   letter-spacing: 0.05em;
   padding: 1rem 1.5rem;
+}
+
+/* ===== Forced transparency for products block ===== */
+.home-page .products,
+.home-page .products .container,
+.home-page .products-head,
+.home-page .product-card,
+.home-page .product-image,
+.home-page .product-body,
+.home-page .products .product-foot {
+  background: transparent !important;
+}
+
+.home-page .product-card {
+  border-color: color-mix(in oklab, var(--cream) 20%, transparent) !important;
+  box-shadow: none !important;
+}
+
+/* ===== Global section transparency over one shared video ===== */
+.home-page :is(
+  .marquee,
+  .about,
+  .products,
+  .nutrition,
+  .business,
+  .testimonials,
+  .contact,
+  .cine-section
+) {
+  background: transparent !important;
+}
+
+.home-page .cine-section::before {
+  display: none !important;
+}
+
+/* ===== Mobile hardening (home) ===== */
+@media (max-width: 767px) {
+  .home-page .hero-lead-form {
+    width: 100%;
+    max-width: none;
+    padding: 1rem;
+  }
+
+  .home-page .hero-lead-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.55rem;
+  }
+
+  .home-page .hero-lead-row input,
+  .home-page .hero-lead-btn {
+    width: 100%;
+  }
+
+  .home-page .hero-lead-row input {
+    font-size: 16px;
+  }
+
+  .home-page .nutrition-lead-form {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.55rem;
+  }
+
+  .home-page .nutrition-lead-form input,
+  .home-page .nutrition-lead-btn {
+    width: 100%;
+  }
+
+  .home-page .nutrition-lead-form input {
+    font-size: 16px;
+  }
+
+  .home-page .contact-intent-tabs {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .home-page .intent-tab {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .home-page .float-messengers {
+    right: 0.75rem;
+    bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+    gap: 0.5rem;
+  }
+
+  .home-page .float-btn {
+    min-width: 2.65rem;
+    min-height: 2.65rem;
+    padding: 0.58rem 0.7rem;
+    justify-content: center;
+  }
+
+  .home-page .float-label {
+    display: none !important;
+  }
+
+  .home-page .contact {
+    padding-bottom: 6rem;
+  }
 }

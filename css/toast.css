@@ -25,3 +25,19 @@
 }
 
 .toast.success { border-left-color: var(--mint); }
+
+@media (max-width: 767px) {
+  .toast-root {
+    left: 1rem;
+    right: 1rem;
+    bottom: calc(0.9rem + env(safe-area-inset-bottom, 0px));
+    align-items: stretch;
+  }
+
+  .toast {
+    max-width: none;
+    width: 100%;
+    font-size: 0.82rem;
+    padding: 0.85rem 1rem;
+  }
+}

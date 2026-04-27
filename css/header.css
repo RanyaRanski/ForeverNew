@@ -4,6 +4,7 @@
   top: 0;
   left: 0;
   right: 0;
+  padding-top: env(safe-area-inset-top, 0px);
   z-index: 60;
   backdrop-filter: blur(14px) saturate(135%);
   background:
@@ -298,5 +299,60 @@
   .nav-links a {
     font-size: 0.79rem;
     padding: 0.58rem 0.92rem;
+  }
+}
+
+@media (max-width: 1023px) {
+  .nav {
+    min-height: 4rem;
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+  }
+
+  .logo-top {
+    font-size: 1.04rem;
+  }
+
+  .logo-bottom {
+    font-size: 0.76rem;
+    letter-spacing: 0.11em;
+  }
+
+  .nav-toggle {
+    width: 2.55rem;
+    height: 2.55rem;
+  }
+
+  .mobile-menu {
+    max-height: calc(100dvh - 4.5rem - env(safe-area-inset-top, 0px));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .mobile-menu-inner {
+    padding-bottom: calc(1.1rem + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+@media (max-width: 640px) {
+  .nav {
+    min-height: 3.75rem;
+    padding-top: 0.65rem;
+    padding-bottom: 0.65rem;
+  }
+
+  .logo-top {
+    font-size: 0.98rem;
+  }
+
+  .logo-bottom {
+    font-size: 0.71rem;
+    letter-spacing: 0.1em;
+  }
+
+  .mobile-menu-inner a {
+    min-height: 2.55rem;
+    font-size: 0.69rem;
+    letter-spacing: 0.08em;
   }
 }

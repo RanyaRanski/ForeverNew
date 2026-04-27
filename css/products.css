@@ -1,6 +1,6 @@
 /* ===== Products ===== */
 .products {
-  background: var(--forest);
+  background: transparent;
   color: var(--cream);
   padding: 6rem 0;
   border-top-left-radius: 3rem;
@@ -49,6 +49,21 @@
 @media (max-width: 640px) {
   .products-head .btn-lime {
     margin-left: 0;
+  }
+
+  .products-head h2 .title-top,
+  .products-head h2 .title-bottom {
+    white-space: normal;
+  }
+
+  .products-head h2 {
+    font-size: clamp(1.75rem, 9vw, 2.4rem);
+    line-height: 0.98;
+  }
+
+  .products-head .btn-lime {
+    width: 100%;
+    justify-content: center;
   }
 }
 
@@ -148,3 +163,37 @@
   transition: color 0.2s;
 }
 .product-card:hover .product-foot { color: var(--mint); }
+
+@media (max-width: 767px) {
+  .product-grid {
+    gap: 1rem;
+  }
+
+  .product-body {
+    padding: 1.35rem;
+  }
+
+  .product-body h3 {
+    font-size: 1.55rem;
+  }
+
+  .product-body p {
+    font-size: 0.94rem;
+  }
+
+  .product-foot {
+    font-size: 0.68rem;
+    letter-spacing: 0.11em;
+  }
+}
+
+/* Home page hard override: fully transparent products area */
+.home-page .products,
+.home-page .products .container,
+.home-page .products-head,
+.home-page .product-card,
+.home-page .product-image,
+.home-page .product-body,
+.home-page .products .product-foot {
+  background: transparent !important;
+}

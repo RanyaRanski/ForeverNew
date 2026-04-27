@@ -560,3 +560,89 @@
     0 12px 24px -18px color-mix(in oklab, #000 90%, transparent);
   transform: translateY(-1px);
 }
+
+@media (max-width: 767px) {
+  .product-page {
+    padding: 6.1rem 0 4.5rem;
+  }
+
+  .product-page .breadcrumb {
+    flex-wrap: wrap;
+    row-gap: 0.3rem;
+    margin-bottom: 1.25rem;
+    font-size: 0.64rem;
+    letter-spacing: 0.14em;
+  }
+
+  .product-hero {
+    margin-bottom: 2.2rem;
+    padding: 1rem;
+    gap: 1.2rem;
+    border-radius: 1rem;
+  }
+
+  .product-hero-content .eyebrow {
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.2em;
+  }
+
+  .product-hero-content h1 {
+    font-size: clamp(1.85rem, 11vw, 2.7rem);
+    line-height: 0.95;
+    margin-bottom: 1rem;
+  }
+
+  .product-hero-content .lead {
+    font-size: 1rem;
+    line-height: 1.62;
+    margin-bottom: 0;
+  }
+
+  .story-block {
+    padding: 1.15rem;
+    border-radius: 1rem;
+  }
+
+  .story-block h2 {
+    font-size: clamp(1.2rem, 7vw, 1.55rem);
+  }
+
+  .story-block h3 {
+    font-size: 1rem;
+  }
+
+  .story-block p,
+  .story-list li,
+  .story-ordered li {
+    font-size: 0.95rem;
+    line-height: 1.62;
+  }
+
+  .story-quote {
+    padding: 0.95rem;
+    font-size: 0.95rem;
+  }
+
+  .product-items .section-sub {
+    margin-bottom: 1.7rem;
+  }
+
+  .product-benefits {
+    margin-top: 2.6rem;
+    padding: 1.2rem;
+  }
+
+  .product-cta-back {
+    margin-top: 2.5rem;
+  }
+}
+
+.product-hero-content h1,
+.product-hero-content .lead,
+.story-block h2,
+.story-block h3,
+.story-block p,
+.story-list li,
+.story-ordered li {
+  overflow-wrap: anywhere;
+}
