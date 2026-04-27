@@ -356,8 +356,9 @@
       flex-shrink: 0;
     }
   </style>
+  <link rel="stylesheet" href="css/premium-theme.css" />
 </head>
-<body>
+<body class="home-page">
   <!-- ============== FLOATING MESSENGERS ============== -->
   <div class="float-messengers">
     <a href="https://wa.me/380000000000?text=Привіт!%20Хочу%20дізнатися%20більше%20про%20Forever%20Living." class="float-btn float-wa" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
@@ -378,7 +379,7 @@
       <div class="nav-links">
         <a href="#about">Про нас</a>
         <a href="#products">Продукти</a>
-        <a href="https://online.fliphtml5.com/plaqm/fytr/" target="_blank" rel="noopener noreferrer">Каталог</a>
+        <a href="https://online.fliphtml5.com/plaqm/fytr/" target="_blank" rel="noopener noreferrer" class="nav-catalog-btn">Каталог</a>
         <a href="#nutrition">Нутриціолог</a>
         <a href="#business">Бізнес</a>
         <a href="#testimonials">Відгуки</a>
@@ -397,7 +398,7 @@
       <div class="container mobile-menu-inner">
         <a href="#about">Про нас</a>
         <a href="#products">Продукти</a>
-        <a href="https://online.fliphtml5.com/plaqm/fytr/" target="_blank" rel="noopener noreferrer">Каталог</a>
+        <a href="https://online.fliphtml5.com/plaqm/fytr/" target="_blank" rel="noopener noreferrer" class="nav-catalog-btn">Каталог</a>
         <a href="#nutrition">Нутриціолог</a>
         <a href="#business">Бізнес</a>
         <a href="#testimonials">Відгуки</a>
@@ -410,10 +411,11 @@
   <main>
     <!-- ============== HERO ============== -->
     <section id="top" class="hero">
-      <div class="hero-bg-text" aria-hidden="true">
-        <h1>ALOE</h1>
-      </div>
-      <div class="container hero-grid">
+      <div class="hero-video-bg" aria-hidden="true">
+        <video autoplay muted loop playsinline preload="metadata" poster="images/hero-aloe.jpg">
+          <source src="videos/hero-loop.mp4" type="video/mp4" />
+        </video>
+      </div>`r`n<div class="container hero-grid">
         <div class="hero-content">
           <span class="badge badge-lime">Натурально з 1978 • 160+ країн</span>
           <div class="urgency-bar">
@@ -433,7 +435,7 @@
               ДІЗНАТИСЯ БІЛЬШЕ
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
-            <a href="#business" class="link-underline">Як стати партнером →</a>
+            <a href="#business" class="btn btn-partner">Як стати партнером →</a>
           </div>
 
           <div class="hero-lead-form">
@@ -444,17 +446,6 @@
               <button class="hero-lead-btn" onclick="submitHeroForm()">Надіслати</button>
             </div>
             <p class="hero-lead-note">🔒 Без спаму. Відповідь протягом 30 хвилин.</p>
-          </div>
-        </div>
-
-        <div class="hero-image-wrap">
-          <div class="hero-image-glow"></div>
-          <div class="hero-image">
-            <img src="images/hero-aloe.jpg" alt="Свіжий лист алое вера з краплями" width="1080" height="1920" />
-            <div class="hero-image-overlay"></div>
-            <div class="hero-image-caption">
-              <p>"100% чистий гель алое — серце нашої філософії."</p>
-            </div>
           </div>
         </div>
       </div>
@@ -702,7 +693,7 @@
     <section class="social-proof-cta">
       <div class="social-proof-cta-inner">
         <div class="social-proof-cta-text">
-          <h3>Готові написати свою <span style="color:var(--lime);font-style:italic;">власну</span> історію?</h3>
+          <h3>Готові написати свою <span class="italic accent-lime">власну</span> історію?</h3>
           <p>Тисячі людей вже змінили своє здоров'я та дохід. Наступна - ти.</p>
         </div>
         <div class="social-proof-cta-actions">
@@ -880,4 +871,5 @@
   </script>
 </body>
 </html>
+
 

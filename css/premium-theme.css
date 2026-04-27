@@ -1,0 +1,754 @@
+/* ============================================================
+   Home Premium Theme (WeAreBrand-inspired direction)
+   Scoped to body.home-page to avoid affecting subpages
+   ============================================================ */
+
+.home-page {
+  background:
+    radial-gradient(120% 80% at 50% -10%, color-mix(in oklab, var(--mint) 22%, transparent) 0%, transparent 60%),
+    radial-gradient(100% 90% at 100% 120%, color-mix(in oklab, var(--lime) 12%, transparent) 0%, transparent 55%),
+    #06080a;
+  color: var(--cream);
+}
+
+.home-page .accent-mint {
+  color: color-mix(in oklab, var(--mint) 80%, var(--cream) 20%);
+}
+
+.home-page .accent-lime {
+  color: color-mix(in oklab, var(--mint) 80%, var(--cream) 20%);
+}
+
+.home-page .eyebrow {
+  color: color-mix(in oklab, var(--cream) 82%, transparent);
+}
+
+.home-page main > section {
+  position: relative;
+}
+
+.home-page .cine-section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid color-mix(in oklab, var(--cream) 12%, transparent);
+  background:
+    linear-gradient(
+      140deg,
+      color-mix(in oklab, #121820 92%, transparent) 0%,
+      color-mix(in oklab, #0d1218 94%, transparent) 50%,
+      color-mix(in oklab, #161822 92%, transparent) 100%
+    );
+}
+
+.home-page .cine-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(
+      to bottom,
+      color-mix(in oklab, #050607 62%, transparent) 0%,
+      color-mix(in oklab, #050607 42%, transparent) 45%,
+      color-mix(in oklab, #050607 70%, transparent) 100%
+    );
+  pointer-events: none;
+}
+
+.home-page .cine-section > * {
+  position: relative;
+  z-index: 2;
+}
+
+.home-page .cine-about,
+.home-page .cine-nutrition,
+.home-page .cine-business,
+.home-page .cine-testimonials {
+  border-radius: 2rem;
+}
+
+.home-page .cine-about {
+  background:
+    radial-gradient(110% 70% at 20% 0%, color-mix(in oklab, var(--mint) 18%, transparent), transparent 62%),
+    linear-gradient(145deg, #121922 0%, #0d1218 55%, #111823 100%);
+}
+
+.home-page .cine-products {
+  background:
+    radial-gradient(110% 70% at 80% 10%, color-mix(in oklab, var(--lime) 14%, transparent), transparent 65%),
+    linear-gradient(150deg, #121a1e 0%, #0f151a 52%, #12161f 100%);
+}
+
+.home-page .cine-nutrition {
+  background:
+    radial-gradient(100% 80% at 10% 20%, color-mix(in oklab, #2d6f72 24%, transparent), transparent 60%),
+    linear-gradient(142deg, #101920 0%, #0d141a 60%, #101923 100%);
+}
+
+.home-page .cine-business {
+  background:
+    radial-gradient(100% 75% at 85% 0%, color-mix(in oklab, #3a4f7a 22%, transparent), transparent 62%),
+    linear-gradient(140deg, #111720 0%, #0c1219 58%, #0f1824 100%);
+}
+
+.home-page .cine-testimonials {
+  background:
+    radial-gradient(100% 70% at 15% 10%, color-mix(in oklab, #5a3e6b 22%, transparent), transparent 62%),
+    linear-gradient(145deg, #131821 0%, #0f141b 56%, #121720 100%);
+}
+
+.home-page .cine-contact {
+  background:
+    radial-gradient(120% 75% at 80% 10%, color-mix(in oklab, #284c5e 24%, transparent), transparent 62%),
+    linear-gradient(145deg, #121a22 0%, #0d141a 60%, #101a24 100%);
+}
+
+/* ===== Marquee ===== */
+.home-page .marquee {
+  background: color-mix(in oklab, #0b0f12 86%, transparent);
+  color: color-mix(in oklab, var(--cream) 88%, transparent);
+  border-top: 1px solid color-mix(in oklab, var(--cream) 16%, transparent);
+  border-bottom: 1px solid color-mix(in oklab, var(--cream) 16%, transparent);
+}
+
+.home-page .marquee-group .dot {
+  background: color-mix(in oklab, var(--lime) 85%, var(--cream) 15%);
+}
+
+/* ===== Shared section title rhythm ===== */
+.home-page .about h2,
+.home-page .products h2,
+.home-page .business h2,
+.home-page .testimonials h2,
+.home-page .contact h2 {
+  letter-spacing: -0.04em;
+}
+
+/* ===== About ===== */
+.home-page .about {
+  padding-top: 8rem;
+  padding-bottom: 8rem;
+}
+
+.home-page .about-intro h2 {
+  color: var(--cream);
+}
+
+.home-page .about-intro-right {
+  color: color-mix(in oklab, var(--cream) 78%, transparent);
+}
+
+.home-page .stats {
+  background: color-mix(in oklab, var(--cream) 14%, transparent);
+  border: 1px solid color-mix(in oklab, var(--cream) 18%, transparent);
+  border-radius: 1.75rem;
+}
+
+.home-page .stat {
+  background: color-mix(in oklab, #11161a 94%, transparent);
+  transition: transform 0.25s ease, background 0.25s ease;
+}
+
+.home-page .stat:hover {
+  background: color-mix(in oklab, var(--mint) 32%, #10151a 68%);
+  transform: translateY(-4px);
+}
+
+.home-page .stat-value {
+  color: var(--cream);
+}
+
+.home-page .stat-label {
+  color: color-mix(in oklab, var(--cream) 58%, transparent);
+}
+
+/* ===== Products ===== */
+.home-page .products {
+  background: color-mix(in oklab, #0a0e11 90%, transparent);
+  border-top-left-radius: 2.5rem;
+  border-top-right-radius: 2.5rem;
+  border-bottom-left-radius: 2.5rem;
+  border-bottom-right-radius: 2.5rem;
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+}
+
+.home-page .products.cine-section {
+  border-radius: 2.5rem;
+}
+
+.home-page .products .container {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.home-page .products-head h2 {
+  color: var(--cream);
+}
+
+.home-page .products .btn-lime {
+  background: color-mix(in oklab, var(--cream) 12%, transparent);
+  color: var(--cream);
+  border: 1px solid color-mix(in oklab, var(--cream) 24%, transparent);
+}
+
+.home-page .products .btn-lime:hover {
+  background: var(--cream);
+  color: var(--forest);
+}
+
+.home-page .product-card {
+  background: color-mix(in oklab, #12171d 96%, transparent);
+  color: var(--cream);
+  border: 1px solid color-mix(in oklab, var(--cream) 14%, transparent);
+}
+
+.home-page .product-card:hover {
+  border-color: color-mix(in oklab, var(--mint) 58%, var(--cream) 42%);
+  box-shadow: 0 24px 60px -35px color-mix(in oklab, #000 70%, transparent);
+}
+
+.home-page .product-image {
+  background: #0f1418;
+}
+
+.home-page .product-tag {
+  color: color-mix(in oklab, var(--mint) 70%, var(--cream) 30%);
+}
+
+.home-page .product-body p {
+  color: color-mix(in oklab, var(--cream) 72%, transparent);
+}
+
+.home-page .product-foot {
+  border-top-color: color-mix(in oklab, var(--cream) 14%, transparent);
+  color: color-mix(in oklab, var(--cream) 72%, transparent);
+}
+
+/* ===== Nutrition ===== */
+.home-page .nutrition {
+  padding-top: 8rem;
+  padding-bottom: 8rem;
+}
+
+.home-page .nutrition-card {
+  background: color-mix(in oklab, #0d1216 94%, transparent);
+  border-color: color-mix(in oklab, var(--cream) 18%, transparent);
+  border-radius: 2rem;
+}
+
+.home-page .nutrition-left h3,
+.home-page .nutrition-topic h4 {
+  color: var(--cream);
+}
+
+.home-page .nutrition-left p,
+.home-page .nutrition-topic p {
+  color: color-mix(in oklab, var(--cream) 74%, transparent);
+}
+
+.home-page .nutrition-topic {
+  background: color-mix(in oklab, #141a20 94%, transparent);
+  border-color: color-mix(in oklab, var(--cream) 14%, transparent);
+}
+
+.home-page .topic-icon {
+  background: color-mix(in oklab, var(--cream) 16%, transparent);
+  color: var(--cream);
+}
+
+/* ===== Business ===== */
+.home-page .business {
+  padding-top: 8rem;
+  padding-bottom: 8rem;
+}
+
+.home-page .business-intro-text h2,
+.home-page .benefit h3 {
+  color: var(--cream);
+}
+
+.home-page .business-intro-text p,
+.home-page .benefit p {
+  color: color-mix(in oklab, var(--cream) 74%, transparent);
+}
+
+.home-page .business-intro-image {
+  border: 1px solid color-mix(in oklab, var(--cream) 16%, transparent);
+  box-shadow: 0 32px 70px -40px color-mix(in oklab, #000 80%, transparent);
+}
+
+.home-page .benefit {
+  background: color-mix(in oklab, #10161b 94%, transparent);
+  border-color: color-mix(in oklab, var(--cream) 12%, transparent);
+}
+
+.home-page .benefit:hover {
+  border-color: color-mix(in oklab, var(--mint) 58%, var(--cream) 42%);
+}
+
+.home-page .benefit-icon {
+  background: color-mix(in oklab, var(--cream) 14%, transparent);
+  color: var(--cream);
+}
+
+.home-page .steps {
+  background: color-mix(in oklab, #0a0f13 90%, transparent);
+  border: 1px solid color-mix(in oklab, var(--cream) 15%, transparent);
+}
+
+.home-page .step-num {
+  color: color-mix(in oklab, var(--cream) 90%, var(--mint) 10%);
+}
+
+.home-page .step p {
+  color: color-mix(in oklab, var(--cream) 70%, transparent);
+}
+
+/* ===== Testimonials ===== */
+.home-page .testimonials {
+  padding-top: 8rem;
+  padding-bottom: 8rem;
+}
+
+.home-page .testimonials-head h2,
+.home-page .review-author .name {
+  color: var(--cream);
+}
+
+.home-page .review {
+  background: color-mix(in oklab, #11181e 95%, transparent);
+  border-color: color-mix(in oklab, var(--cream) 14%, transparent);
+}
+
+.home-page .review:hover {
+  border-color: color-mix(in oklab, var(--mint) 58%, var(--cream) 42%);
+}
+
+.home-page .review-text {
+  color: color-mix(in oklab, var(--cream) 78%, transparent);
+}
+
+.home-page .review-author {
+  border-top-color: color-mix(in oklab, var(--cream) 14%, transparent);
+}
+
+.home-page .avatar {
+  background: color-mix(in oklab, var(--cream) 14%, transparent);
+  color: var(--cream);
+}
+
+/* ===== Contact ===== */
+.home-page .contact {
+  padding-bottom: 4.5rem;
+}
+
+.home-page .contact-card {
+  border: 1px solid color-mix(in oklab, var(--cream) 18%, transparent);
+  background: color-mix(in oklab, #0b1014 92%, transparent);
+}
+
+.home-page .contact-info > div:first-child p,
+.home-page .contact-links a {
+  color: color-mix(in oklab, var(--cream) 78%, transparent);
+}
+
+.home-page .contact-links a:hover {
+  color: var(--cream);
+}
+
+.home-page .contact-icon,
+.home-page .socials a {
+  background: color-mix(in oklab, var(--cream) 12%, transparent);
+}
+
+.home-page .socials a:hover {
+  background: var(--cream);
+  color: var(--forest);
+}
+
+.home-page .contact-form-wrap {
+  background: color-mix(in oklab, #131a20 98%, transparent);
+  color: var(--cream);
+}
+
+.home-page .field label {
+  color: color-mix(in oklab, var(--cream) 60%, transparent);
+}
+
+.home-page .field input,
+.home-page .field textarea {
+  color: var(--cream);
+  border-bottom-color: color-mix(in oklab, var(--cream) 24%, transparent);
+}
+
+.home-page .field input:focus,
+.home-page .field textarea:focus {
+  border-bottom-color: color-mix(in oklab, var(--mint) 70%, var(--cream) 30%);
+}
+
+.home-page .btn-submit {
+  background: color-mix(in oklab, var(--cream) 12%, transparent);
+  color: var(--cream);
+  border: 1px solid color-mix(in oklab, var(--cream) 20%, transparent);
+}
+
+.home-page .btn-submit:hover {
+  background: var(--cream);
+  color: var(--forest);
+}
+
+.home-page .contact-foot {
+  border-top-color: color-mix(in oklab, var(--cream) 14%, transparent);
+  color: color-mix(in oklab, var(--cream) 52%, transparent);
+}
+
+/* ===== Responsive tweaks ===== */
+@media (max-width: 767px) {
+  .home-page .cine-about,
+  .home-page .cine-nutrition,
+  .home-page .cine-business,
+  .home-page .cine-testimonials {
+    border-radius: 1.25rem;
+  }
+
+  .home-page .products {
+    margin-left: 0;
+    margin-right: 0;
+    border-radius: 0;
+  }
+
+  .home-page .products .container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-page .cine-section::before { background: color-mix(in oklab, #050607 52%, transparent); }
+}
+
+/* ===== ForeverNew custom hero lead elements ===== */
+.home-page .hero-lead-form {
+  background: color-mix(in oklab, #121922 94%, transparent);
+  border-color: color-mix(in oklab, var(--cream) 18%, transparent);
+}
+
+.home-page .hero-lead-form p {
+  color: color-mix(in oklab, var(--cream) 76%, transparent);
+}
+
+.home-page .hero-lead-row input {
+  background: color-mix(in oklab, #0f151d 96%, transparent);
+  border-color: color-mix(in oklab, var(--cream) 24%, transparent);
+  color: var(--cream);
+}
+
+.home-page .hero-lead-row input:focus {
+  border-color: color-mix(in oklab, var(--mint) 70%, var(--cream) 30%);
+}
+
+.home-page .hero-lead-btn {
+  background: color-mix(in oklab, var(--cream) 12%, transparent);
+  color: var(--cream);
+  border: 1px solid color-mix(in oklab, var(--cream) 20%, transparent);
+}
+
+.home-page .hero-lead-btn:hover {
+  background: var(--cream);
+  color: var(--forest);
+}
+
+.home-page .hero-lead-note {
+  color: color-mix(in oklab, var(--cream) 58%, transparent);
+}
+
+.home-page .urgency-bar {
+  background: color-mix(in oklab, var(--cream) 12%, transparent);
+  border-color: color-mix(in oklab, var(--cream) 20%, transparent);
+  color: var(--cream);
+}
+
+.home-page .form-trust {
+  border-top-color: color-mix(in oklab, var(--cream) 14%, transparent);
+}
+
+.home-page .form-trust-item {
+  color: color-mix(in oklab, var(--cream) 62%, transparent);
+}
+
+.home-page .form-trust-item svg {
+  color: color-mix(in oklab, var(--mint) 70%, var(--cream) 30%);
+}
+
+/* ===== ForeverNew nutrition consult cards ===== */
+.home-page .nutrition-lead {
+  background: color-mix(in oklab, #121922 94%, transparent);
+  border: 1px solid color-mix(in oklab, var(--cream) 18%, transparent);
+  border-radius: 1rem;
+}
+
+.home-page .nutrition-lead-title {
+  color: var(--cream);
+}
+
+.home-page .nutrition-lead-sub {
+  color: color-mix(in oklab, var(--cream) 76%, transparent);
+}
+
+.home-page .nutrition-lead-form input {
+  background: color-mix(in oklab, #0f151d 96%, transparent);
+  border-color: color-mix(in oklab, var(--cream) 24%, transparent);
+  color: var(--cream);
+}
+
+.home-page .nutrition-lead-form input:focus {
+  border-color: color-mix(in oklab, var(--mint) 70%, var(--cream) 30%);
+}
+
+.home-page .nutrition-lead-form input::placeholder {
+  color: color-mix(in oklab, var(--cream) 55%, transparent);
+}
+
+.home-page .nutrition-lead-btn {
+  background: color-mix(in oklab, var(--cream) 12%, transparent);
+  color: var(--cream);
+  border: 1px solid color-mix(in oklab, var(--cream) 20%, transparent);
+}
+
+.home-page .nutrition-lead-btn:hover {
+  background: var(--cream);
+  color: var(--forest);
+}
+
+.home-page .nutrition-lead-perks {
+  color: color-mix(in oklab, var(--cream) 62%, transparent);
+}
+
+.home-page .nutrition-lead-perks span {
+  color: color-mix(in oklab, var(--cream) 62%, transparent);
+}
+
+.home-page .nutrition-lead-perks svg {
+  color: color-mix(in oklab, var(--mint) 70%, var(--cream) 30%);
+}
+
+/* ===== ForeverNew post-testimonial CTA ===== */
+.home-page .social-proof-cta {
+  padding-bottom: 4.5rem;
+}
+
+.home-page .social-proof-cta-inner {
+  border: 1px solid color-mix(in oklab, var(--cream) 18%, transparent);
+  background:
+    linear-gradient(
+      145deg,
+      color-mix(in oklab, #121a22 94%, transparent) 0%,
+      color-mix(in oklab, #0d141a 96%, transparent) 60%,
+      color-mix(in oklab, #101a24 94%, transparent) 100%
+    );
+  box-shadow: 0 28px 70px -45px color-mix(in oklab, #000 82%, transparent);
+}
+
+.home-page .social-proof-cta-text h3 {
+  color: var(--cream);
+}
+
+.home-page .social-proof-cta-text p {
+  color: color-mix(in oklab, var(--cream) 72%, transparent);
+}
+
+.home-page .btn-lime-solid {
+  background: color-mix(in oklab, var(--cream) 12%, transparent);
+  color: var(--cream);
+  border: 1px solid color-mix(in oklab, var(--cream) 22%, transparent);
+}
+
+.home-page .btn-lime-solid:hover {
+  background: var(--cream);
+  color: var(--forest);
+}
+
+.home-page .btn-ghost-cream {
+  border-color: color-mix(in oklab, var(--cream) 22%, transparent);
+  background: color-mix(in oklab, var(--cream) 8%, transparent);
+  color: var(--cream);
+}
+
+.home-page .btn-ghost-cream:hover {
+  border-color: color-mix(in oklab, var(--cream) 35%, transparent);
+  background: var(--cream);
+  color: var(--forest);
+}
+
+/* ===== ForeverNew contact intent tabs ===== */
+.home-page .contact-intent-tabs {
+  gap: 0.62rem;
+}
+
+.home-page .intent-tab {
+  position: relative;
+  min-height: 2.9rem;
+  border: 1px solid color-mix(in oklab, var(--cream) 18%, transparent);
+  border-radius: 0.82rem;
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, #151c23 94%, transparent) 0%,
+      color-mix(in oklab, #10161c 96%, transparent) 100%
+    );
+  color: color-mix(in oklab, var(--cream) 78%, transparent);
+  font-size: 0.68rem;
+  letter-spacing: 0.09em;
+  box-shadow: inset 0 1px 0 color-mix(in oklab, var(--cream) 10%, transparent);
+  transition: color 0.22s ease, border-color 0.22s ease, background 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.home-page .intent-tab:hover,
+.home-page .intent-tab:focus-visible {
+  border-color: color-mix(in oklab, var(--cream) 30%, transparent);
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, #1a232d 94%, transparent) 0%,
+      color-mix(in oklab, #131a21 96%, transparent) 100%
+    );
+  color: var(--cream);
+  transform: translateY(-1px);
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, var(--cream) 14%, transparent),
+    0 12px 24px -18px color-mix(in oklab, #000 90%, transparent);
+  outline: none;
+}
+
+.home-page .intent-tab.active {
+  border-color: color-mix(in oklab, var(--mint) 58%, var(--cream) 42%);
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--mint) 26%, #151d24 74%) 0%,
+      color-mix(in oklab, var(--mint) 18%, #10161c 82%) 100%
+    );
+  color: var(--cream);
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, var(--cream) 18%, transparent),
+    0 16px 30px -22px color-mix(in oklab, var(--mint) 55%, transparent);
+}
+
+/* ===== One button style (home) ===== */
+.home-page {
+  --btn-unified-bg-start: color-mix(in oklab, #151c23 94%, transparent);
+  --btn-unified-bg-end: color-mix(in oklab, #10161c 96%, transparent);
+  --btn-unified-bg-hover-start: color-mix(in oklab, #1a232d 94%, transparent);
+  --btn-unified-bg-hover-end: color-mix(in oklab, #131a21 96%, transparent);
+  --btn-unified-text: color-mix(in oklab, var(--cream) 78%, transparent);
+  --btn-unified-text-hover: var(--cream);
+  --btn-unified-border: color-mix(in oklab, var(--cream) 18%, transparent);
+  --btn-unified-border-hover: color-mix(in oklab, var(--cream) 30%, transparent);
+  --btn-unified-shadow: inset 0 1px 0 color-mix(in oklab, var(--cream) 10%, transparent);
+}
+
+.home-page :is(
+  .btn,
+  .btn-primary,
+  .btn-lime,
+  .btn-dark,
+  .btn-submit,
+  .hero-lead-btn,
+  .nutrition-lead-btn,
+  .btn-lime-solid,
+  .btn-ghost-cream,
+  .nav-cta,
+  .nav-catalog-btn,
+  .mobile-cta,
+  .intent-tab,
+  .float-btn
+) {
+  border: 1px solid var(--btn-unified-border);
+  background:
+    linear-gradient(
+      180deg,
+      var(--btn-unified-bg-start) 0%,
+      var(--btn-unified-bg-end) 100%
+    );
+  color: var(--btn-unified-text);
+  box-shadow: var(--btn-unified-shadow);
+}
+
+.home-page :is(
+  .btn,
+  .btn-primary,
+  .btn-lime,
+  .btn-dark,
+  .btn-submit,
+  .hero-lead-btn,
+  .nutrition-lead-btn,
+  .btn-lime-solid,
+  .btn-ghost-cream,
+  .nav-cta,
+  .nav-catalog-btn,
+  .mobile-cta,
+  .intent-tab,
+  .float-btn
+):hover,
+.home-page :is(
+  .btn,
+  .btn-primary,
+  .btn-lime,
+  .btn-dark,
+  .btn-submit,
+  .hero-lead-btn,
+  .nutrition-lead-btn,
+  .btn-lime-solid,
+  .btn-ghost-cream,
+  .nav-cta,
+  .nav-catalog-btn,
+  .mobile-cta,
+  .intent-tab,
+  .float-btn
+):focus-visible {
+  background:
+    linear-gradient(
+      180deg,
+      var(--btn-unified-bg-hover-start) 0%,
+      var(--btn-unified-bg-hover-end) 100%
+    );
+  color: var(--btn-unified-text-hover);
+  border-color: var(--btn-unified-border-hover);
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, var(--cream) 14%, transparent),
+    0 12px 24px -18px color-mix(in oklab, #000 90%, transparent);
+  transform: translateY(-1px);
+}
+
+.home-page .intent-tab.active {
+  background:
+    linear-gradient(
+      180deg,
+      var(--btn-unified-bg-hover-start) 0%,
+      var(--btn-unified-bg-hover-end) 100%
+    );
+  color: var(--btn-unified-text-hover);
+  border-color: var(--btn-unified-border-hover);
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, var(--cream) 14%, transparent),
+    0 12px 24px -18px color-mix(in oklab, #000 90%, transparent);
+}
+
+.home-page .mobile-cta {
+  border: 1px solid var(--btn-unified-border) !important;
+  background:
+    linear-gradient(
+      180deg,
+      var(--btn-unified-bg-start) 0%,
+      var(--btn-unified-bg-end) 100%
+    ) !important;
+  color: var(--btn-unified-text) !important;
+}
+
+.home-page .btn-partner {
+  text-transform: none;
+  letter-spacing: 0.05em;
+  padding: 1rem 1.5rem;
+}

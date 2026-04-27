@@ -1,126 +1,156 @@
 /* ===== Hero ===== */
 .hero {
   position: relative;
-  min-height: 100dvh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  overflow: hidden;
-  padding: 7rem 0 4rem;
-}
-
-.hero-bg-text {
-  position: absolute;
-  inset: 0;
+  min-height: 100svh;
   display: flex;
   align-items: center;
-  justify-content: center;
-  opacity: 0.04;
-  pointer-events: none;
-  user-select: none;
+  overflow: hidden;
+  padding: 7rem 0 4rem;
+  isolation: isolate;
+  background: #050607;
 }
-.hero-bg-text h1 {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 40vw;
-  line-height: 1;
-  letter-spacing: -0.04em;
-  color: var(--forest);
+
+.hero-video-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-video-bg video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(1.18) brightness(0.84) contrast(1.2);
+  transform: scale(1.04);
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(
+      to bottom,
+      color-mix(in oklab, #050607 34%, transparent) 0%,
+      color-mix(in oklab, #050607 20%, transparent) 40%,
+      color-mix(in oklab, #050607 56%, transparent) 100%
+    );
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background:
+    radial-gradient(120% 120% at 50% 35%, transparent 42%, color-mix(in oklab, #050607 48%, transparent) 100%);
+  pointer-events: none;
 }
 
 .hero-grid {
   position: relative;
-  z-index: 10;
+  z-index: 3;
   display: grid;
   grid-template-columns: 1fr;
   gap: 2rem;
   align-items: center;
+  width: 100%;
+}
+
+.hero-content {
+  max-width: 60rem;
+  margin: 0;
+  display: grid;
+  justify-items: start;
+  text-align: left;
+  gap: 1.35rem;
+}
+
+.hero .badge {
+  border: 1px solid color-mix(in oklab, var(--cream) 30%, transparent);
+  background: color-mix(in oklab, var(--cream) 12%, transparent);
+  color: var(--cream);
 }
 
 .hero-title {
-  font-size: clamp(2.25rem, 9vw, 6rem);
+  font-size: clamp(2.35rem, 8.8vw, 7.25rem);
   font-weight: 800;
   line-height: 0.9;
-  letter-spacing: -0.04em;
-  color: var(--forest);
-  margin: 2rem 0;
-  overflow-wrap: break-word;
+  letter-spacing: -0.05em;
+  color: var(--cream);
+  text-transform: uppercase;
+  text-wrap: balance;
 }
 
 .hero-text {
-  max-width: 36rem;
-  font-size: 1.125rem;
-  font-weight: 500;
-  line-height: 1.6;
-  margin-bottom: 2.5rem;
-  color: color-mix(in oklab, var(--forest) 75%, transparent);
+  max-width: 46rem;
+  font-size: clamp(1rem, 1.8vw, 1.25rem);
+  line-height: 1.65;
+  color: color-mix(in oklab, var(--cream) 88%, transparent);
+  text-wrap: pretty;
 }
 
 .hero-actions {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 1.5rem;
+  gap: 1rem;
 }
 
-/* Image */
-.hero-image-wrap {
-  position: relative;
-  animation: float 6s ease-in-out infinite;
+.hero .btn-primary {
+  background: var(--cream);
+  color: var(--forest);
+  box-shadow: 0 18px 50px -20px color-mix(in oklab, #000 70%, transparent);
 }
-.hero-image-glow {
-  position: absolute;
-  inset: -1.5rem;
-  background: color-mix(in oklab, var(--lime) 30%, transparent);
-  border-radius: 1.5rem;
-  filter: blur(48px);
-  transition: background 0.3s;
-}
-.hero-image-wrap:hover .hero-image-glow { background: color-mix(in oklab, var(--lime) 50%, transparent); }
 
-.hero-image {
-  position: relative;
-  aspect-ratio: 4 / 5;
-  border-radius: 1.5rem;
-  overflow: hidden;
-  border: 4px solid var(--cream);
-  box-shadow: var(--shadow-glow);
-  transform: rotate(2deg);
-  transition: transform 0.7s ease;
+.hero .btn-primary:hover {
+  background: var(--lime);
+  color: var(--forest);
 }
-.hero-image-wrap:hover .hero-image { transform: rotate(0); }
-.hero-image img { width: 100%; height: 100%; object-fit: cover; }
 
-.hero-image-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, color-mix(in oklab, var(--forest) 70%, transparent), transparent 50%);
-}
-.hero-image-caption {
-  position: absolute;
-  bottom: 1.5rem;
-  left: 1.5rem;
-  right: 1.5rem;
+.hero .link-underline {
   color: var(--cream);
+  border-color: color-mix(in oklab, var(--cream) 70%, transparent);
 }
-.hero-image-caption p {
-  font-family: var(--font-display);
-  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
-  font-weight: 700;
-  line-height: 1.2;
-  margin-bottom: 0.5rem;
+
+.hero .link-underline:hover {
+  color: var(--lime);
+  border-color: var(--lime);
 }
-.hero-image-caption span {
-  font-size: 0.625rem;
+
+.hero-scroll-link {
+  margin-top: 0.85rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
-  opacity: 0.7;
+  color: color-mix(in oklab, var(--cream) 78%, transparent);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.hero-scroll-link::before {
+  content: "";
+  width: 1.1rem;
+  height: 1.1rem;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg);
+  animation: hero-scroll-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes hero-scroll-pulse {
+  0%,
+  100% { transform: rotate(45deg) translate(0, 0); opacity: 0.65; }
+  50% { transform: rotate(45deg) translate(4px, 4px); opacity: 1; }
 }
 
 @media (min-width: 640px) {
   .hero-actions { flex-direction: row; align-items: center; }
 }
 
-@media (min-width: 1024px) {
-  .hero-grid { grid-template-columns: 7fr 5fr; }
+@media (prefers-reduced-motion: reduce) {
+  .hero-video-bg video { transform: none; }
+  .hero-scroll-link::before { animation: none; }
 }

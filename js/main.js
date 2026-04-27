@@ -8,15 +8,41 @@
   const toggle = document.getElementById("navToggle");
 
   if (header && toggle) {
+    function syncHeaderScrollState() {
+      header.classList.toggle("is-scrolled", window.scrollY > 18);
+    }
+
+    function setMenuState(isOpen) {
+      header.classList.toggle("is-open", isOpen);
+      toggle.setAttribute("aria-expanded", String(isOpen));
+    }
+
+    toggle.setAttribute("aria-expanded", "false");
+    syncHeaderScrollState();
+
+    window.addEventListener("scroll", syncHeaderScrollState, { passive: true });
+
     toggle.addEventListener("click", function () {
-      header.classList.toggle("is-open");
+      setMenuState(!header.classList.contains("is-open"));
     });
 
     // Close menu when a link inside it is clicked
     header.querySelectorAll(".mobile-menu a").forEach(function (a) {
       a.addEventListener("click", function () {
-        header.classList.remove("is-open");
+        setMenuState(false);
       });
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        setMenuState(false);
+      }
+    });
+
+    window.addEventListener("resize", function () {
+      if (window.innerWidth >= 1024 && header.classList.contains("is-open")) {
+        setMenuState(false);
+      }
     });
   }
 
