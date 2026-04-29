@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://aloe-hub.flpuretail.com/sitemap.xml

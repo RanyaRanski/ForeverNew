@@ -13,14 +13,30 @@
   inset: 0;
   z-index: 0;
   pointer-events: none;
+  overflow: hidden;
 }
 
 .home-page .site-video-bg video {
-  width: 100%;
-  height: 100%;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100vw;
+  height: 100vh;
+  width: 100dvw;
+  height: 100dvh;
+  min-width: 100vw;
+  min-height: 100vh;
+  min-width: 100dvw;
+  min-height: 100dvh;
   object-fit: cover;
-  object-position: center;
-  filter: saturate(1.12) brightness(0.74) contrast(1.08);
+  object-position: center center;
+  transform: translate(-50%, -50%) scale(1.12);
+  border: 0 !important;
+  outline: 0;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  filter: saturate(1.14) brightness(0.9) contrast(1.04);
 }
 
 .home-page .site-video-overlay {
@@ -29,9 +45,9 @@
   background:
     linear-gradient(
       to bottom,
-      color-mix(in oklab, #050607 54%, transparent) 0%,
-      color-mix(in oklab, #050607 28%, transparent) 42%,
-      color-mix(in oklab, #050607 58%, transparent) 100%
+      color-mix(in oklab, #050607 32%, transparent) 0%,
+      color-mix(in oklab, #050607 16%, transparent) 42%,
+      color-mix(in oklab, #050607 38%, transparent) 100%
     );
 }
 
@@ -78,10 +94,22 @@
 }
 
 .home-page .page-video-bg video {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
   width: 100%;
   height: 100%;
+  min-width: 100%;
+  min-height: 100%;
   object-fit: cover;
-  filter: saturate(1.08) brightness(0.76) contrast(1.06);
+  object-position: center center;
+  transform: translate(-50%, -50%) scale(1.12);
+  border: 0 !important;
+  outline: 0;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  filter: saturate(1.1) brightness(0.9) contrast(1.03);
 }
 
 .home-page .page-video-tint {
@@ -92,9 +120,9 @@
   background:
     linear-gradient(
       to bottom,
-      color-mix(in oklab, #050607 62%, transparent) 0%,
-      color-mix(in oklab, #050607 40%, transparent) 38%,
-      color-mix(in oklab, #050607 68%, transparent) 100%
+      color-mix(in oklab, #050607 42%, transparent) 0%,
+      color-mix(in oklab, #050607 24%, transparent) 38%,
+      color-mix(in oklab, #050607 46%, transparent) 100%
     ),
     radial-gradient(120% 120% at 50% 8%, color-mix(in oklab, var(--mint) 10%, transparent), transparent 62%);
 }
@@ -498,7 +526,7 @@
 }
 
 .home-page .benefit {
-  background: color-mix(in oklab, #10161b 94%, transparent);
+  background: color-mix(in oklab, #10161b 76%, transparent);
   border-color: color-mix(in oklab, var(--cream) 12%, transparent);
 }
 
@@ -512,8 +540,8 @@
 }
 
 .home-page .steps {
-  background: color-mix(in oklab, #0a0f13 90%, transparent);
-  border: 1px solid color-mix(in oklab, var(--cream) 15%, transparent);
+  background: color-mix(in oklab, #0a0f13 72%, transparent);
+  border: 1px solid color-mix(in oklab, var(--cream) 12%, transparent);
 }
 
 .home-page .step-num {
@@ -689,8 +717,8 @@
 
 /* ===== ForeverNew custom hero lead elements ===== */
 .home-page .hero-lead-form {
-  background: color-mix(in oklab, #121922 94%, transparent);
-  border-color: color-mix(in oklab, var(--cream) 18%, transparent);
+  background: color-mix(in oklab, #377E47 48%, transparent);
+  border-color: color-mix(in oklab, var(--cream) 16%, transparent);
 }
 
 .home-page .hero-lead-form p {
@@ -698,7 +726,7 @@
 }
 
 .home-page .hero-lead-row input {
-  background: color-mix(in oklab, #0f151d 96%, transparent);
+  background: color-mix(in oklab, #377E47 34%, transparent);
   border-color: color-mix(in oklab, var(--cream) 24%, transparent);
   color: var(--cream);
 }
@@ -719,7 +747,7 @@
 }
 
 .home-page .hero-lead-note {
-  color: color-mix(in oklab, var(--cream) 58%, transparent);
+  color: color-mix(in oklab, var(--cream) 72%, transparent);
 }
 
 .home-page .urgency-bar {
@@ -742,8 +770,8 @@
 
 /* ===== ForeverNew nutrition consult cards ===== */
 .home-page .nutrition-lead {
-  background: color-mix(in oklab, #121922 94%, transparent);
-  border: 1px solid color-mix(in oklab, var(--cream) 18%, transparent);
+  background: color-mix(in oklab, #121922 74%, transparent);
+  border: 1px solid color-mix(in oklab, var(--cream) 14%, transparent);
   border-radius: 1rem;
 }
 
@@ -1002,16 +1030,72 @@
   color: var(--btn-unified-text) !important;
 }
 
+.home-page :is(.nav-cta, .mobile-cta, .float-btn) {
+  border-radius: 9999px;
+  min-height: 2.65rem;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.74rem;
+  letter-spacing: 0.06em;
+  text-transform: none;
+}
+
+.home-page :is(.nav-cta, .mobile-cta) {
+  padding: 0.7rem 1.1rem !important;
+}
+
+.home-page :is(.nav-cta, .mobile-cta) {
+  border: 1px solid var(--btn-unified-border) !important;
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, #377E47 58%, #111922 42%) 0%,
+      color-mix(in oklab, #377E47 34%, #0e141b 66%) 100%
+    ) !important;
+  color: var(--cream) !important;
+}
+
+.home-page :is(.nav-cta, .mobile-cta):hover,
+.home-page :is(.nav-cta, .mobile-cta):focus-visible {
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, #377E47 74%, #18232b 26%) 0%,
+      color-mix(in oklab, #377E47 48%, #121a22 52%) 100%
+    ) !important;
+  color: var(--cream) !important;
+  border-color: color-mix(in oklab, #377E47 55%, var(--cream) 45%) !important;
+}
+
+@media (min-width: 1280px) {
+  .home-page .nav-cta {
+    font-size: 0.79rem;
+  }
+}
+
+.home-page .hero-lead-btn {
+  background: #377E47;
+  border-color: color-mix(in oklab, #377E47 72%, var(--cream) 28%);
+  color: var(--cream);
+}
+
+.home-page .hero-lead-btn:hover,
+.home-page .hero-lead-btn:focus-visible {
+  background: color-mix(in oklab, #377E47 84%, var(--cream) 16%);
+  border-color: color-mix(in oklab, #377E47 64%, var(--cream) 36%);
+  color: var(--cream);
+}
+
 /* ===== Messenger buttons: match nav button style ===== */
 .home-page .float-btn {
   border: 1px solid var(--btn-unified-border) !important;
   background:
     linear-gradient(
       180deg,
-      var(--btn-unified-bg-start) 0%,
-      var(--btn-unified-bg-end) 100%
+      color-mix(in oklab, #377E47 58%, #111922 42%) 0%,
+      color-mix(in oklab, #377E47 34%, #0e141b 66%) 100%
     ) !important;
-  color: var(--btn-unified-text) !important;
+  color: var(--cream) !important;
   box-shadow: var(--btn-unified-shadow) !important;
 }
 
@@ -1019,8 +1103,8 @@
   background:
     linear-gradient(
       180deg,
-      var(--btn-unified-bg-start) 0%,
-      var(--btn-unified-bg-end) 100%
+      color-mix(in oklab, #377E47 58%, #111922 42%) 0%,
+      color-mix(in oklab, #377E47 34%, #0e141b 66%) 100%
     ) !important;
 }
 
@@ -1028,8 +1112,8 @@
   background:
     linear-gradient(
       180deg,
-      var(--btn-unified-bg-start) 0%,
-      var(--btn-unified-bg-end) 100%
+      color-mix(in oklab, #377E47 58%, #111922 42%) 0%,
+      color-mix(in oklab, #377E47 34%, #0e141b 66%) 100%
     ) !important;
 }
 
@@ -1038,11 +1122,11 @@
   background:
     linear-gradient(
       180deg,
-      var(--btn-unified-bg-hover-start) 0%,
-      var(--btn-unified-bg-hover-end) 100%
+      color-mix(in oklab, #377E47 74%, #18232b 26%) 0%,
+      color-mix(in oklab, #377E47 48%, #121a22 52%) 100%
     ) !important;
-  color: var(--btn-unified-text-hover) !important;
-  border-color: var(--btn-unified-border-hover) !important;
+  color: var(--cream) !important;
+  border-color: color-mix(in oklab, #377E47 55%, var(--cream) 45%) !important;
   box-shadow:
     inset 0 1px 0 color-mix(in oklab, var(--cream) 14%, transparent),
     0 12px 24px -18px color-mix(in oklab, #000 90%, transparent) !important;
@@ -1105,6 +1189,109 @@
   display: none !important;
 }
 
+/* ===== Ultra-subtle fill for all key blocks ===== */
+.home-page :is(
+  .about-intro,
+  .stats,
+  .stat,
+  .nutrition-card,
+  .nutrition-topic,
+  .hero-lead-form,
+  .hero-lead-row input,
+  .nutrition-lead,
+  .nutrition-lead-form input,
+  .business-intro-text,
+  .benefit,
+  .steps,
+  .review,
+  .social-proof-cta-inner,
+  .contact-card,
+  .contact-form-wrap,
+  .field input,
+  .field textarea,
+  .intent-tab
+) {
+  background: color-mix(in oklab, #377E47 12%, transparent) !important;
+  border-color: color-mix(in oklab, var(--cream) 10%, transparent) !important;
+}
+
+/* ===== Block-aware button colors ===== */
+.home-page .hero-actions .btn-primary,
+.home-page .hero-lead-btn,
+.home-page .nutrition-lead-btn,
+.home-page .btn-submit,
+.home-page .social-proof-cta .btn-lime-solid {
+  background: #377E47 !important;
+  color: var(--cream) !important;
+  border: 1px solid color-mix(in oklab, #377E47 72%, var(--cream) 28%) !important;
+}
+
+.home-page .hero-actions .btn-primary:hover,
+.home-page .hero-actions .btn-primary:focus-visible,
+.home-page .hero-lead-btn:hover,
+.home-page .hero-lead-btn:focus-visible,
+.home-page .nutrition-lead-btn:hover,
+.home-page .nutrition-lead-btn:focus-visible,
+.home-page .btn-submit:hover,
+.home-page .btn-submit:focus-visible,
+.home-page .social-proof-cta .btn-lime-solid:hover,
+.home-page .social-proof-cta .btn-lime-solid:focus-visible {
+  background: color-mix(in oklab, #377E47 84%, var(--cream) 16%) !important;
+  color: var(--cream) !important;
+  border-color: color-mix(in oklab, #377E47 64%, var(--cream) 36%) !important;
+}
+
+.home-page .hero-actions .btn-partner,
+.home-page .social-proof-cta .btn-ghost-cream {
+  background: color-mix(in oklab, var(--cream) 10%, transparent) !important;
+  color: var(--cream) !important;
+  border: 1px solid color-mix(in oklab, var(--cream) 28%, transparent) !important;
+}
+
+.home-page .hero-actions .btn-partner:hover,
+.home-page .hero-actions .btn-partner:focus-visible,
+.home-page .social-proof-cta .btn-ghost-cream:hover,
+.home-page .social-proof-cta .btn-ghost-cream:focus-visible {
+  background: color-mix(in oklab, var(--cream) 16%, transparent) !important;
+  color: var(--cream) !important;
+  border-color: color-mix(in oklab, var(--cream) 38%, transparent) !important;
+}
+
+.home-page .products .btn-lime {
+  background: color-mix(in oklab, var(--lime) 82%, var(--cream) 18%) !important;
+  color: var(--forest) !important;
+  border: 1px solid color-mix(in oklab, var(--lime) 58%, var(--forest) 42%) !important;
+}
+
+.home-page .products .btn-lime:hover,
+.home-page .products .btn-lime:focus-visible {
+  background: color-mix(in oklab, var(--lime) 65%, var(--cream) 35%) !important;
+  color: var(--forest) !important;
+  border-color: color-mix(in oklab, var(--lime) 70%, var(--forest) 30%) !important;
+}
+
+.home-page .contact-intent-tabs .intent-tab {
+  background: color-mix(in oklab, var(--cream) 8%, transparent) !important;
+  color: color-mix(in oklab, var(--cream) 84%, transparent) !important;
+  border-color: color-mix(in oklab, var(--cream) 24%, transparent) !important;
+}
+
+.home-page .contact-intent-tabs .intent-tab.active,
+.home-page .contact-intent-tabs .intent-tab:hover,
+.home-page .contact-intent-tabs .intent-tab:focus-visible {
+  background: color-mix(in oklab, #377E47 72%, transparent) !important;
+  color: var(--cream) !important;
+  border-color: color-mix(in oklab, #377E47 56%, var(--cream) 44%) !important;
+}
+
+.home-page .lead-consent {
+  color: color-mix(in oklab, var(--cream) 78%, transparent) !important;
+}
+
+.home-page .lead-consent a {
+  color: var(--cream) !important;
+}
+
 /* ===== Mobile hardening (home) ===== */
 @media (max-width: 767px) {
   .home-page .hero-lead-form {
@@ -1125,7 +1312,7 @@
   }
 
   .home-page .hero-lead-row input {
-    font-size: 16px;
+    font-size: 18px;
   }
 
   .home-page .nutrition-lead-form {
@@ -1140,7 +1327,7 @@
   }
 
   .home-page .nutrition-lead-form input {
-    font-size: 16px;
+    font-size: 18px;
   }
 
   .home-page .contact-intent-tabs {

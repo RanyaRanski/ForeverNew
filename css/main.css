@@ -43,6 +43,7 @@ body {
 img { max-width: 100%; display: block; }
 a { color: inherit; text-decoration: none; }
 button { font: inherit; cursor: pointer; border: none; background: none; }
+span { color: #FFFE91 !important; }
 
 h1, h2, h3, h4 {
   font-family: var(--font-display);

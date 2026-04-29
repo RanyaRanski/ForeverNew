@@ -2,8 +2,13 @@
 .product-page-body {
   --category-glow: color-mix(in oklab, var(--mint) 38%, transparent);
   background:
-    radial-gradient(100% 70% at 50% -10%, color-mix(in oklab, var(--mint) 18%, transparent) 0%, transparent 62%),
-    radial-gradient(120% 90% at 100% 120%, color-mix(in oklab, var(--lime) 10%, transparent) 0%, transparent 58%),
+    linear-gradient(
+      to bottom,
+      color-mix(in oklab, #050607 54%, transparent) 0%,
+      color-mix(in oklab, #050607 28%, transparent) 42%,
+      color-mix(in oklab, #050607 58%, transparent) 100%
+    ),
+    url("../images/rishennya.jpg") center / cover no-repeat fixed,
     #06080a;
   color: var(--cream);
 }
@@ -38,17 +43,30 @@
 }
 
 .product-page-body .site-header .nav-links a:hover {
-  color: var(--lime);
+  color: var(--cream);
 }
 
 .product-page-body .site-header .nav-cta {
-  border: 1px solid color-mix(in oklab, var(--cream) 28%, transparent);
-  background: color-mix(in oklab, var(--cream) 12%, transparent);
+  border: 1px solid color-mix(in oklab, #377E47 45%, var(--cream) 55%);
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, #377E47 58%, #111922 42%) 0%,
+      color-mix(in oklab, #377E47 34%, #0e141b 66%) 100%
+    );
+  color: var(--cream);
 }
 
-.product-page-body .site-header .nav-cta:hover {
-  background: var(--cream);
-  color: var(--forest);
+.product-page-body .site-header .nav-cta:hover,
+.product-page-body .site-header .nav-cta:focus-visible {
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, #377E47 74%, #18232b 26%) 0%,
+      color-mix(in oklab, #377E47 48%, #121a22 52%) 100%
+    );
+  color: var(--cream);
+  border-color: color-mix(in oklab, #377E47 55%, var(--cream) 45%);
 }
 
 .product-page-body .site-header .nav-toggle {
@@ -67,12 +85,18 @@
 }
 
 .product-page-body .site-header .mobile-menu-inner a:hover {
-  color: var(--lime);
+  color: var(--cream);
 }
 
 .product-page-body .site-header .mobile-cta {
-  background: var(--cream);
-  color: var(--forest) !important;
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, #377E47 58%, #111922 42%) 0%,
+      color-mix(in oklab, #377E47 34%, #0e141b 66%) 100%
+    ) !important;
+  border-color: color-mix(in oklab, #377E47 45%, var(--cream) 55%) !important;
+  color: var(--cream) !important;
 }
 
 .product-page {
@@ -223,6 +247,10 @@
 /* ----- Items grid ----- */
 .product-items {
   margin-top: 2rem;
+  padding: 1.4rem;
+  border-radius: 1.15rem;
+  border: 1px solid color-mix(in oklab, var(--cream) 10%, transparent);
+  background: color-mix(in oklab, #377E47 12%, transparent);
 }
 
 .product-items h2 {
@@ -256,9 +284,8 @@
 }
 
 .item-card {
-  background:
-    linear-gradient(180deg, color-mix(in oklab, #151b21 94%, transparent) 0%, color-mix(in oklab, #10161c 96%, transparent) 100%);
-  border: 1px solid color-mix(in oklab, var(--cream) 13%, transparent);
+  background: color-mix(in oklab, #377E47 12%, transparent);
+  border: 1px solid color-mix(in oklab, var(--cream) 10%, transparent);
   border-radius: 1rem;
   padding: 1.6rem;
   transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
@@ -561,6 +588,36 @@
   transform: translateY(-1px);
 }
 
+/* Product pages: branded fill for key CTA buttons */
+.product-page-body .site-header .nav-cta,
+.product-page-body .site-header .mobile-cta,
+.product-page .btn-dark {
+  border: 1px solid color-mix(in oklab, #377E47 45%, var(--cream) 55%) !important;
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, #377E47 58%, #111922 42%) 0%,
+      color-mix(in oklab, #377E47 34%, #0e141b 66%) 100%
+    ) !important;
+  color: var(--cream) !important;
+}
+
+.product-page-body .site-header .nav-cta:hover,
+.product-page-body .site-header .nav-cta:focus-visible,
+.product-page-body .site-header .mobile-cta:hover,
+.product-page-body .site-header .mobile-cta:focus-visible,
+.product-page .btn-dark:hover,
+.product-page .btn-dark:focus-visible {
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, #377E47 74%, #18232b 26%) 0%,
+      color-mix(in oklab, #377E47 48%, #121a22 52%) 100%
+    ) !important;
+  color: var(--cream) !important;
+  border-color: color-mix(in oklab, #377E47 55%, var(--cream) 45%) !important;
+}
+
 @media (max-width: 767px) {
   .product-page {
     padding: 6.1rem 0 4.5rem;
@@ -627,6 +684,10 @@
     margin-bottom: 1.7rem;
   }
 
+  .product-items {
+    padding: 1rem;
+  }
+
   .product-benefits {
     margin-top: 2.6rem;
     padding: 1.2rem;
@@ -645,4 +706,17 @@
 .story-list li,
 .story-ordered li {
   overflow-wrap: anywhere;
+}
+
+/* ===== Ultra-subtle fill for all key blocks on product pages ===== */
+.product-page :is(
+  .product-hero,
+  .story-block,
+  .story-quote,
+  .product-benefits,
+  .benefit-item
+) {
+  background: color-mix(in oklab, #377E47 12%, transparent) !important;
+  border-color: color-mix(in oklab, var(--cream) 10%, transparent) !important;
+  box-shadow: none !important;
 }

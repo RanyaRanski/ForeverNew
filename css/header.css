@@ -18,6 +18,10 @@
   transition: background 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
 }
 
+.site-header .container {
+  max-width: none;
+}
+
 .site-header::after {
   content: "";
   position: absolute;
@@ -63,6 +67,13 @@
   padding-top: 1rem;
   padding-bottom: 1rem;
   transition: padding 0.28s ease;
+}
+
+@media (min-width: 1280px) {
+  .nav {
+    padding-left: 1.75rem;
+    padding-right: 1.75rem;
+  }
 }
 
 .site-header.is-scrolled .nav {
@@ -170,22 +181,32 @@
   justify-content: center;
   border-radius: 999px;
   padding: 0.68rem 1.28rem;
-  border: 1px solid color-mix(in oklab, var(--cream) 22%, transparent);
-  background: color-mix(in oklab, var(--cream) 10%, transparent);
+  border: 1px solid color-mix(in oklab, #377E47 45%, var(--cream) 55%);
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, #377E47 58%, #111922 42%) 0%,
+      color-mix(in oklab, #377E47 34%, #0e141b 66%) 100%
+    );
   color: var(--cream);
   font-family: var(--font-display);
   font-weight: 800;
   font-size: 0.72rem;
   letter-spacing: 0.13em;
-  text-transform: uppercase;
+  text-transform: none;
   transition: background 0.22s ease, color 0.22s ease, transform 0.22s ease, border-color 0.22s ease;
 }
 
 .nav-cta:hover,
 .nav-cta:focus-visible {
-  background: var(--cream);
-  color: var(--forest);
-  border-color: var(--cream);
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, #377E47 74%, #18232b 26%) 0%,
+      color-mix(in oklab, #377E47 48%, #121a22 52%) 100%
+    );
+  color: var(--cream);
+  border-color: color-mix(in oklab, #377E47 55%, var(--cream) 45%);
   transform: translateY(-1px);
   outline: none;
 }
@@ -269,12 +290,18 @@
 }
 
 .mobile-cta {
-  background: var(--cream) !important;
-  border-color: var(--cream) !important;
-  color: var(--forest) !important;
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, #377E47 58%, #111922 42%) 0%,
+      color-mix(in oklab, #377E47 34%, #0e141b 66%) 100%
+    ) !important;
+  border-color: color-mix(in oklab, #377E47 45%, var(--cream) 55%) !important;
+  color: var(--cream) !important;
   font-family: var(--font-display);
   font-weight: 800;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.06em;
+  text-transform: none;
 }
 
 @media (min-width: 1024px) {
