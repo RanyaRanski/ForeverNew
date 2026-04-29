@@ -1,69 +1,1 @@
-# Forever Living — Static HTML version
-
-Чистий статичний сайт без фреймворків. Просто відкрий `index.html` у браузері.
-
-## Структура
-
-```
-static/
-├── index.html          # Єдина сторінка з усіма секціями
-├── css/
-│   ├── main.css        # Базові токени, типографіка, кнопки, утиліти
-│   ├── header.css      # Шапка + мобільне меню
-│   ├── hero.css        # Hero-секція
-│   ├── marquee.css     # Біжучий рядок
-│   ├── about.css       # Про нас + статистика
-│   ├── products.css    # 3 категорії продуктів
-│   ├── nutrition.css   # Консультації нутриціолога
-│   ├── business.css    # FBO, переваги, 3 кроки
-│   ├── testimonials.css# Відгуки
-│   ├── contact.css     # Контактна форма
-│   └── toast.css       # Сповіщення
-├── js/
-│   └── main.js         # Мобільне меню + сабміт форми + тости
-└── images/
-    ├── hero-aloe.jpg
-    ├── product-aloe-gel.jpg
-    ├── product-nutrition.jpg
-    ├── product-beauty.jpg
-    └── business-lifestyle.jpg
-```
-
-## Запуск
-- Просто відкрити `index.html` у браузері, або
-- Запустити локальний сервер: `python3 -m http.server 8000` у папці `static/` і відкрити http://localhost:8000
-
-## Хостинг
-Можна викласти на будь-який статичний хостинг: GitHub Pages, Netlify, Vercel, Cloudflare Pages, звичайний Apache/Nginx.
-
-## Заявки з форм (безкоштовно)
-
-У проєкті підключена безкоштовна відправка заявок через FormSubmit (AJAX) у файлі `js/main.js`.
-
-- Endpoint: `https://formsubmit.co/ajax/hello@forever.ua`
-- Куди приходять заявки: на email `hello@forever.ua`
-- Де власник бачить заявки: у вхідних листах цієї пошти
-
-### Важливо для першого запуску
-
-1. Відправте тестову заявку з сайту.
-2. FormSubmit надішле лист-підтвердження на `hello@forever.ua`.
-3. Підтвердіть email у цьому листі.
-4. Після цього всі форми почнуть стабільно приходити на пошту.
-
-## Безпека даних клієнта
-
-Вбудовано базовий захист:
-
-- HTTPS-відправка даних;
-- валідація телефону/email перед відправкою;
-- honeypot-поле `_honey` проти ботів;
-- антифлуд (rate-limit 20 секунд між заявками в браузері);
-- мінімізація даних (відправляються лише потрібні поля заявки);
-- без токенів/паролів у фронтенді.
-
-## Кольори (Forever Living)
-- `--lime` — золотистий жовтий акцент
-- `--mint` — зелень алое
-- `--forest` — глибокий гірчично-жовтий (текст / темні секції)
-- `--cream` — теплий світлий фон
+# Forever Living — Static HTML versionЧистий статичний сайт без фреймворків. Просто відкрий `index.html` у браузері.## Структура```static/├── index.html          # Єдина сторінка з усіма секціями├── css/│   ├── main.css        # Базові токени, типографіка, кнопки, утиліти│   ├── header.css      # Шапка + мобільне меню│   ├── hero.css        # Hero-секція│   ├── marquee.css     # Біжучий рядок│   ├── about.css       # Про нас + статистика│   ├── products.css    # 3 категорії продуктів│   ├── nutrition.css   # Консультації нутриціолога│   ├── business.css    # FBO, переваги, 3 кроки│   ├── testimonials.css# Відгуки│   ├── contact.css     # Контактна форма│   └── toast.css       # Сповіщення├── js/│   └── main.js         # Мобільне меню + сабміт форми + тости└── images/    ├── hero-aloe.jpg    ├── product-aloe-gel.jpg    ├── product-nutrition.jpg    ├── product-beauty.jpg    └── business-lifestyle.jpg```## Запуск* Просто відкрити `index.html` у браузері, або* Запустити локальний сервер: `python3 -m http.server 8000` у папці `static/` і відкрити http://localhost:8000## ХостингМожна викласти на будь-який статичний хостинг: GitHub Pages, Netlify, Vercel, Cloudflare Pages, звичайний Apache/Nginx.## Кольори (Forever Living)* `--lime` — золотистий жовтий акцент* `--mint` — зелень алое* `--forest` — глибокий гірчично-жовтий (текст / темні секції)* `--cream` — теплий світлий фон
