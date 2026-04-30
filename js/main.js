@@ -3,7 +3,7 @@
 // =============================================================
 
 (function () {
-  const LEADS_ENDPOINT = "https://formsubmit.co/ajax/hello@forever.ua";
+  const LEADS_ENDPOINT = "https://formsubmit.co/ajax/aloehubflp@gmail.com";
   const LEAD_RATE_LIMIT_MS = 20000;
   const MIN_FILL_TIME_MS = 1200;
   const FORM_LOAD_TS = Date.now();
