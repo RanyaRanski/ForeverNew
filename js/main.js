@@ -53,6 +53,44 @@
     });
   }
 
+  // ---- Responsive hero video source ----
+  (function setupResponsiveHeroVideo() {
+    const video = document.querySelector(".site-video-bg video");
+    if (!video) return;
+
+    const source = video.querySelector("source");
+    if (!source) return;
+
+    const desktopSrc = video.getAttribute("data-desktop-src") || source.getAttribute("src");
+    const mobileSrc = video.getAttribute("data-mobile-src") || desktopSrc;
+    if (!desktopSrc || !mobileSrc) return;
+
+    const mq = window.matchMedia("(max-width: 430px)");
+
+    function applySource() {
+      const nextSrc = mq.matches ? mobileSrc : desktopSrc;
+      if (video.getAttribute("data-active-src") === nextSrc) return;
+
+      source.setAttribute("src", nextSrc);
+      video.setAttribute("data-active-src", nextSrc);
+      video.load();
+      const playPromise = video.play();
+      if (playPromise && typeof playPromise.catch === "function") {
+        playPromise.catch(function () {
+          // autoplay can be blocked; ignore silently
+        });
+      }
+    }
+
+    applySource();
+
+    if (typeof mq.addEventListener === "function") {
+      mq.addEventListener("change", applySource);
+    } else if (typeof mq.addListener === "function") {
+      mq.addListener(applySource);
+    }
+  })();
+
   // ---- Toast notifications ----
   function toast(message, type) {
     const root = document.getElementById("toastRoot");

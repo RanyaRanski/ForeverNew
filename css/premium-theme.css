@@ -142,6 +142,26 @@
   }
 }
 
+@media (max-width: 430px) {
+  .home-page .site-video-bg {
+    background: #050607;
+  }
+
+  .home-page .site-video-bg video {
+    width: 100vw;
+    height: 100vh;
+    width: 100dvw;
+    height: 100dvh;
+    min-width: 100vw;
+    min-height: 100vh;
+    min-width: 100dvw;
+    min-height: 100dvh;
+    object-fit: cover;
+    object-position: 58% center;
+    transform: translate(-50%, -50%) scale(1.02);
+  }
+}
+
 .home-page .cine-section {
   position: relative;
   isolation: isolate;
