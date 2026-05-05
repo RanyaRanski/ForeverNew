@@ -3,7 +3,9 @@
 // =============================================================
 
 (function () {
-  const LEADS_ENDPOINT = "https://formsubmit.co/ajax/aloehubflp@gmail.com";
+  const SUPABASE_URL = "https://evqmticivailwbocynub.supabase.co";
+  const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_XHjHSPdrUvKw3MO0jlSi8w_I0z90XJF";
+  const LEADS_ENDPOINT = SUPABASE_URL + "/rest/v1/leads";
   const LEAD_RATE_LIMIT_MS = 20000;
   const MIN_FILL_TIME_MS = 1200;
   const FORM_LOAD_TS = Date.now();
@@ -94,7 +96,10 @@
   // ---- Toast notifications ----
   function toast(message, type) {
     const root = document.getElementById("toastRoot");
-    if (!root) return;
+    if (!root) {
+      if (type === "error") alert(message);
+      return;
+    }
     const el = document.createElement("div");
     el.className = "toast " + (type || "");
     el.textContent = message;
@@ -148,37 +153,46 @@
   }
 
   async function sendLead(lead) {
-    const payload = new FormData();
-    payload.append("name", cleanText(lead.name, 80) || "Без імені");
-    payload.append("phone", cleanText(lead.phone, 32));
-    if (lead.email) payload.append("email", cleanText(lead.email, 120));
-    payload.append("intent", cleanText(lead.intent, 40) || "general");
-    payload.append("source", cleanText(lead.source, 40) || "site");
-    payload.append("page", window.location.href);
-    payload.append(
-      "message",
-      [
-        "Нова заявка з сайту Forever Living",
-        "Джерело: " + (cleanText(lead.source, 40) || "site"),
-        "Намір: " + (cleanText(lead.intent, 40) || "general"),
-      ].join("\n")
-    );
+    const leadIntent = cleanText(lead.intent, 40) || "general";
+    const leadType = leadIntent === "business" ? "бізнес" : "консультація";
+    const source = cleanText(lead.source, 40) || "site";
+    const page = window.location.href;
+    const comment = [
+      "Нова заявка з сайту Forever Living",
+      "Джерело: " + source,
+      "Намір: " + leadIntent,
+      "Сторінка: " + page
+    ].join("\n");
 
-    // FormSubmit reserved fields (free and no backend required)
-    payload.append("_subject", "Forever Living: нова заявка");
-    payload.append("_template", "table");
-    payload.append("_honey", cleanText(lead.honey, 80));
+    const payload = {
+      name: cleanText(lead.name, 80) || "Без імені",
+      phone: cleanText(lead.phone, 32),
+      email: cleanText(lead.email, 120) || null,
+      type: leadType,
+      status: "Новий",
+      comment: comment
+    };
 
     const response = await fetch(LEADS_ENDPOINT, {
       method: "POST",
       headers: {
-        Accept: "application/json",
+        "apikey": SUPABASE_PUBLISHABLE_KEY,
+        "Authorization": "Bearer " + SUPABASE_PUBLISHABLE_KEY,
+        "Content-Type": "application/json",
+        "Prefer": "return=representation",
       },
-      body: payload,
+      body: JSON.stringify(payload),
     });
 
     if (!response.ok) {
-      throw new Error("submission_failed");
+      let reason = "submission_failed";
+      try {
+        const errJson = await response.json();
+        reason = errJson.message || errJson.error || reason;
+      } catch (_err) {
+        // ignore JSON parse errors
+      }
+      throw new Error(reason);
     }
   }
 
@@ -210,8 +224,13 @@
       markSubmitTime();
       toast("✅ Дякуємо! Заявку отримано. Зв'яжемось найближчим часом.", "success");
       return true;
-    } catch (_err) {
-      toast("Не вдалося відправити заявку. Напишіть нам у WhatsApp або Telegram.", "error");
+    } catch (err) {
+      const message = err && err.message ? err.message : "submission_failed";
+      const isRls = message.toLowerCase().indexOf("row-level security") >= 0;
+      const humanMessage = isRls
+        ? "Не вдалося відправити заявку: у Supabase не дозволено публічний insert (RLS). Додайте policy для anon."
+        : ("Не вдалося відправити заявку: " + message);
+      toast(humanMessage, "error");
       return false;
     }
   }
