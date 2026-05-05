@@ -12,6 +12,19 @@
   const PHONE_RE = /^\+?[0-9()\-\s]{8,22}$/;
   const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   let supabaseClient = null;
+  const INTENT_LABELS = {
+    products: "Хочу продукти",
+    business: "Цікавить бізнес",
+    nutrition: "Консультація",
+    general: "Загальна заявка"
+  };
+  const SOURCE_LABELS = {
+    contact_form: "Контактна форма",
+    hero_form: "Форма у першому екрані",
+    nutrition_form: "Форма консультації",
+    business_form: "Форма бізнесу",
+    site: "Сайт"
+  };
 
   // ---- Mobile menu toggle ----
   const header = document.getElementById("siteHeader");
@@ -193,15 +206,22 @@
     return "";
   }
 
+  function labelFromMap(map, value) {
+    const key = cleanText(value, 80);
+    return map[key] || key || "Не вказано";
+  }
+
   async function sendLead(lead) {
     const leadIntent = cleanText(lead.intent, 40) || "general";
     const leadType = leadIntent === "business" ? "бізнес" : "консультація";
     const source = cleanText(lead.source, 40) || "site";
+    const intentLabel = labelFromMap(INTENT_LABELS, leadIntent);
+    const sourceLabel = labelFromMap(SOURCE_LABELS, source);
     const page = window.location.href;
     const comment = [
       "Нова заявка з сайту Forever Living",
-      "Джерело: " + source,
-      "Намір: " + leadIntent,
+      "Джерело: " + sourceLabel,
+      "Намір: " + intentLabel,
       "Сторінка: " + page
     ].join("\n");
 
