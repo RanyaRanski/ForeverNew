@@ -11,6 +11,7 @@
   const FORM_LOAD_TS = Date.now();
   const PHONE_RE = /^\+?[0-9()\-\s]{8,22}$/;
   const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  let supabaseClient = null;
 
   // ---- Mobile menu toggle ----
   const header = document.getElementById("siteHeader");
@@ -165,6 +166,20 @@
     }
   }
 
+  function getSupabaseClient() {
+    if (supabaseClient) return supabaseClient;
+    if (!window.supabase || typeof window.supabase.createClient !== "function") return null;
+
+    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false,
+        detectSessionInUrl: false
+      }
+    });
+    return supabaseClient;
+  }
+
   function validateLead(lead) {
     const phone = cleanText(lead.phone, 32);
     const name = cleanText(lead.name, 80);
@@ -199,27 +214,11 @@
       comment: comment
     };
 
-    const response = await fetch(LEADS_ENDPOINT, {
-      method: "POST",
-      headers: {
-        "apikey": SUPABASE_PUBLISHABLE_KEY,
-        "Authorization": "Bearer " + SUPABASE_PUBLISHABLE_KEY,
-        "Content-Type": "application/json",
-        "Prefer": "return=representation",
-      },
-      body: JSON.stringify(payload),
-    });
+    const client = getSupabaseClient();
+    if (!client) throw new Error("supabase_sdk_missing");
 
-    if (!response.ok) {
-      let reason = "submission_failed";
-      try {
-        const errJson = await response.json();
-        reason = errJson.message || errJson.error || reason;
-      } catch (_err) {
-        // ignore JSON parse errors
-      }
-      throw new Error(reason);
-    }
+    const { error } = await client.from("leads").insert(payload);
+    if (error) throw new Error(error.message || "submission_failed");
   }
 
   async function submitLead(lead) {
@@ -268,7 +267,10 @@
     } catch (err) {
       const message = err && err.message ? err.message : "submission_failed";
       const isRls = message.toLowerCase().indexOf("row-level security") >= 0;
-      const humanMessage = isRls
+      const isSdkMissing = message === "supabase_sdk_missing";
+      const humanMessage = isSdkMissing
+        ? "Не вдалося відправити заявку: модуль Supabase не завантажився. Оновіть сторінку Ctrl+F5."
+        : isRls
         ? "Не вдалося відправити заявку: у Supabase не дозволено публічний insert (RLS). Додайте policy для anon."
         : ("Не вдалося відправити заявку: " + message);
       toast(humanMessage, "error", toastAnchor);
