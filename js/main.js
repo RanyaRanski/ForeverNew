@@ -16,6 +16,7 @@
     products: "Хочу продукти",
     business: "Цікавить бізнес",
     nutrition: "Консультація",
+    call: "Дзвінок з сайту",
     general: "Загальна заявка"
   };
   const SOURCE_LABELS = {
@@ -23,6 +24,7 @@
     hero_form: "Форма у першому екрані",
     nutrition_form: "Форма консультації",
     business_form: "Форма бізнесу",
+    phone_click: "Клік по номеру телефону",
     site: "Сайт"
   };
 
@@ -211,15 +213,27 @@
     return map[key] || key || "Не вказано";
   }
 
+  function formatLeadDate(date) {
+    return date.toLocaleString("uk-UA", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
+    });
+  }
+
   async function sendLead(lead) {
     const leadIntent = cleanText(lead.intent, 40) || "general";
-    const leadType = leadIntent === "business" ? "бізнес" : "консультація";
+    const leadType = leadIntent === "business" ? "бізнес" : (leadIntent === "call" ? "дзвінок" : "консультація");
     const source = cleanText(lead.source, 40) || "site";
     const intentLabel = labelFromMap(INTENT_LABELS, leadIntent);
     const sourceLabel = labelFromMap(SOURCE_LABELS, source);
     const page = window.location.href;
+    const submittedAt = formatLeadDate(new Date());
     const comment = [
-      "Нова заявка з сайту Forever Living",
+      leadIntent === "call" ? "Клік по номеру телефону на сайті Forever Living" : "Нова заявка з сайту Forever Living",
+      "Дата заявки: " + submittedAt,
       "Джерело: " + sourceLabel,
       "Намір: " + intentLabel,
       "Сторінка: " + page
@@ -302,6 +316,36 @@
   window.ForeverLeads = {
     submitLead: submitLead,
   };
+
+  function normalizePhoneForCrm(phone) {
+    return cleanText(phone, 40).replace(/^tel:/i, "");
+  }
+
+  async function registerPhoneClick(link) {
+    const now = Date.now();
+    const lastAt = Number(link.dataset.lastLeadflowCallAt || 0);
+    if (now - lastAt < 10000) return;
+    link.dataset.lastLeadflowCallAt = String(now);
+
+    const phone = normalizePhoneForCrm(link.getAttribute("href") || link.textContent || "");
+    try {
+      await sendLead({
+        source: "phone_click",
+        intent: "call",
+        name: "Дзвінок з сайту",
+        phone: phone,
+        email: ""
+      });
+    } catch (error) {
+      console.warn("Не вдалося зареєструвати клік по телефону", error);
+    }
+  }
+
+  document.querySelectorAll('a[href^="tel:"]').forEach(function (link) {
+    link.addEventListener("click", function () {
+      registerPhoneClick(link);
+    });
+  });
 
   // ---- Contact form ----
   const form = document.getElementById("contactForm");
