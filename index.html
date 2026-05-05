@@ -53,7 +53,7 @@
   <link rel="stylesheet" href="css/business.css" />
   <link rel="stylesheet" href="css/testimonials.css" />
   <link rel="stylesheet" href="css/contact.css?v=20260428-0100" />
-  <link rel="stylesheet" href="css/toast.css?v=20260428-0100" />
+  <link rel="stylesheet" href="css/toast.css?v=20260505-0201" />
 
   <style>
     /* ===== LEAD FLOW ADDITIONS ===== */
@@ -119,35 +119,14 @@
       color: color-mix(in oklab, var(--forest) 50%, transparent);
     }
 
-    /* --- Urgency timer --- */
-    .urgency-bar {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      background: color-mix(in oklab, var(--lime) 30%, transparent);
-      border: 1px solid color-mix(in oklab, var(--forest) 15%, transparent);
-      border-radius: 9999px;
-      padding: 0.4rem 1rem;
-      font-size: 0.72rem;
+    .hero-response-note {
+      margin-top: 0.9rem;
+      font-size: 0.78rem;
       font-weight: 700;
       letter-spacing: 0.08em;
-      color: var(--forest);
-      margin-bottom: 1rem;
+      text-transform: uppercase;
+      color: color-mix(in oklab, var(--cream) 78%, transparent);
     }
-    .urgency-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #e63946;
-      animation: pulse-dot 1.4s ease-in-out infinite;
-      flex-shrink: 0;
-    }
-    @keyframes pulse-dot {
-      0%,
-      100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(0.7); }
-    }
-    #heroTimer { font-variant-numeric: tabular-nums; color: #e63946; }
 
     /* --- Floating messenger buttons --- */
     .float-messengers {
@@ -426,6 +405,27 @@
       text-decoration: underline;
       text-underline-offset: 2px;
     }
+
+    .form-feedback {
+      margin-top: 0.7rem;
+      border-radius: 0.7rem;
+      padding: 0.7rem 0.85rem;
+      font-size: 0.86rem;
+      font-weight: 700;
+      line-height: 1.35;
+      display: none;
+    }
+    .form-feedback.is-visible { display: block; }
+    .form-feedback.success {
+      background: rgba(47, 138, 88, 0.22);
+      color: #d7ffe8;
+      border: 1px solid rgba(84, 232, 154, 0.45);
+    }
+    .form-feedback.error {
+      background: rgba(169, 72, 52, 0.28);
+      color: #ffe7e2;
+      border: 1px solid rgba(255, 152, 127, 0.5);
+    }
   </style>
   <link rel="stylesheet" href="css/premium-theme.css?v=20260428-0101" />
 </head>
@@ -507,10 +507,6 @@
           <div class="container hero-grid">
             <div class="hero-content">
               <span class="badge badge-lime">Натурально з 1978 • 160+ країн</span>
-              <div class="urgency-bar">
-                <span class="urgency-dot"></span>
-                Безкоштовна консультація - залишилось <span id="heroTimer">14:47</span>
-              </div>
               <h1 class="hero-title">
                 СИЛА ПРИРОДИ.<br />
                 <span class="italic accent-mint">ТВОЄ ЖИТТЯ.</span>
@@ -526,6 +522,7 @@
                 </a>
                 <a href="#business" class="btn btn-partner">Як стати партнером →</a>
               </div>
+              <p class="hero-response-note">Відповідь гарантуємо протягом 30 хвилин</p>
 
               <div class="hero-lead-form">
                 <p>⚡ Отримати безкоштовну консультацію</p>
@@ -881,6 +878,7 @@
                   <small class="lead-consent-text">Я погоджуюся з <a href="privacy-policy.html" target="_blank" rel="noopener noreferrer">Політикою конфіденційності</a> та <a href="terms.html" target="_blank" rel="noopener noreferrer">Умовами користування</a></small>
                 </label>
                 <button type="submit" class="btn-submit">Надіслати заявку</button>
+                <div id="contactFeedback" class="form-feedback" aria-live="polite"></div>
               </form>
 
               <div class="form-trust">
@@ -905,6 +903,9 @@
             <span class="contact-legal-links">
               <a href="privacy-policy.html" target="_blank" rel="noopener noreferrer">Політика конфіденційності</a>
               <a href="terms.html" target="_blank" rel="noopener noreferrer">Умови користування</a>
+              <a href="public-offer.html" target="_blank" rel="noopener noreferrer">Публічна оферта</a>
+              <a href="earnings-disclaimer.html" target="_blank" rel="noopener noreferrer">Дисклеймер про доходи</a>
+              <a href="product-disclaimer.html" target="_blank" rel="noopener noreferrer">Дисклеймер про продукцію</a>
             </span>
             <span>created by Ranskij</span>
           </div>
@@ -918,24 +919,6 @@
 
   <script src="js/main.js"></script>
   <script>
-    // ===== URGENCY TIMER =====
-    (function() {
-      let secs = Math.floor(Math.random() * (18 - 12 + 1) + 12) * 60 + Math.floor(Math.random() * 60);
-      const el = document.getElementById("heroTimer");
-      if (!el) return;
-      function fmt(s) {
-        const m = String(Math.floor(s / 60)).padStart(2, "0");
-        const sc = String(s % 60).padStart(2, "0");
-        return m + ":" + sc;
-      }
-      el.textContent = fmt(secs);
-      setInterval(() => {
-        secs--;
-        if (secs <= 0) { secs = Math.floor(Math.random() * 300 + 600); }
-        el.textContent = fmt(secs);
-      }, 1000);
-    })();
-
     // ===== HERO FORM =====
     async function submitHeroForm() {
       const name = document.getElementById("heroName").value.trim();

@@ -94,8 +94,22 @@
   })();
 
   // ---- Toast notifications ----
-  function toast(message, type) {
-    const root = document.getElementById("toastRoot");
+  function getToastRoot(anchorEl) {
+    if (anchorEl) {
+      let inlineRoot = anchorEl.querySelector(".inline-toast-root");
+      if (!inlineRoot) {
+        inlineRoot = document.createElement("div");
+        inlineRoot.className = "toast-root inline-toast-root";
+        inlineRoot.setAttribute("aria-live", "polite");
+        anchorEl.appendChild(inlineRoot);
+      }
+      return inlineRoot;
+    }
+    return document.getElementById("toastRoot");
+  }
+
+  function toast(message, type, anchorEl) {
+    const root = getToastRoot(anchorEl);
     if (!root) {
       if (type === "error") alert(message);
       return;
@@ -113,6 +127,18 @@
   }
 
   window.showToast = window.showToast || toast;
+  const contactFeedbackEl = document.getElementById("contactFeedback");
+
+  function setContactFeedback(message, type) {
+    if (!contactFeedbackEl) return;
+    if (!message) {
+      contactFeedbackEl.textContent = "";
+      contactFeedbackEl.className = "form-feedback";
+      return;
+    }
+    contactFeedbackEl.textContent = message;
+    contactFeedbackEl.className = "form-feedback is-visible " + (type === "success" ? "success" : "error");
+  }
 
   function cleanText(value, maxLen) {
     const str = String(value || "")
@@ -197,9 +223,19 @@
   }
 
   async function submitLead(lead) {
+    const isContactForm = !!lead && lead.source === "contact_form";
+    const toastAnchor = isContactForm
+      ? (document.querySelector(".contact-form-wrap") || document.body)
+      : (
+        document.querySelector(".hero-lead-form") ||
+        document.querySelector(".nutrition-lead") ||
+        document.body
+      );
     const fillTime = Date.now() - FORM_LOAD_TS;
     if (fillTime < MIN_FILL_TIME_MS) {
-      toast("Спробуйте ще раз через секунду.", "error");
+      const text = "Спробуйте ще раз через секунду.";
+      toast(text, "error", toastAnchor);
+      if (isContactForm) setContactFeedback(text, "error");
       return false;
     }
 
@@ -209,20 +245,25 @@
     }
 
     if (isRateLimited()) {
-      toast("Заявку вже відправлено. Спробуйте ще раз за 20 секунд.", "error");
+      const text = "Заявку вже відправлено. Спробуйте ще раз за 20 секунд.";
+      toast(text, "error", toastAnchor);
+      if (isContactForm) setContactFeedback(text, "error");
       return false;
     }
 
     const validationError = validateLead(lead);
     if (validationError) {
-      toast(validationError, "error");
+      toast(validationError, "error", toastAnchor);
+      if (isContactForm) setContactFeedback(validationError, "error");
       return false;
     }
 
     try {
       await sendLead(lead);
       markSubmitTime();
-      toast("✅ Дякуємо! Заявку отримано. Зв'яжемось найближчим часом.", "success");
+      const text = "✅ Дякуємо! Заявку отримано. Зв'яжемось найближчим часом.";
+      toast(text, "success", toastAnchor);
+      if (isContactForm) setContactFeedback(text, "success");
       return true;
     } catch (err) {
       const message = err && err.message ? err.message : "submission_failed";
@@ -230,7 +271,8 @@
       const humanMessage = isRls
         ? "Не вдалося відправити заявку: у Supabase не дозволено публічний insert (RLS). Додайте policy для anon."
         : ("Не вдалося відправити заявку: " + message);
-      toast(humanMessage, "error");
+      toast(humanMessage, "error", toastAnchor);
+      if (isContactForm) setContactFeedback(humanMessage, "error");
       return false;
     }
   }
@@ -242,6 +284,10 @@
   // ---- Contact form ----
   const form = document.getElementById("contactForm");
   if (form) {
+    form.addEventListener("input", function () {
+      setContactFeedback("", "error");
+    });
+
     form.addEventListener("submit", async function (e) {
       e.preventDefault();
       const intentEl = form.querySelector("#intentField");
