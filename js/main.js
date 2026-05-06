@@ -266,8 +266,13 @@
     const sourceLabel = labelFromMap(SOURCE_LABELS, source);
     const page = getSafePageUrl();
     const submittedAt = formatLeadDate(new Date());
+    const leadTitle = source === "phone_click"
+      ? "Клік по номеру телефону на сайті Forever Living"
+      : (source === "whatsapp_click" || source === "viber_click" || source === "telegram_click")
+      ? "Клік по месенджеру на сайті Forever Living"
+      : "Нова заявка з сайту Forever Living";
     const comment = [
-      leadIntent === "call" ? "Клік по номеру телефону на сайті Forever Living" : "Нова заявка з сайту Forever Living",
+      leadTitle,
       "Дата заявки: " + submittedAt,
       "Джерело: " + sourceLabel,
       "Намір: " + intentLabel,
