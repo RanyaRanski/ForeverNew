@@ -24,6 +24,9 @@
     nutrition_form: "Форма консультації",
     business_form: "Форма бізнесу",
     phone_click: "Клік по номеру телефону",
+    whatsapp_click: "Клік по WhatsApp",
+    viber_click: "Клік по Viber",
+    telegram_click: "Клік по Telegram",
     site: "Сайт"
   };
   const ALLOWED_INTENTS = Object.keys(INTENT_LABELS);
@@ -412,7 +415,43 @@
   bindIntentTabs();
 
   function normalizePhoneForCrm(phone) {
-    return cleanText(phone, 40).replace(/^tel:/i, "");
+    return cleanText(phone, 80).replace(/^tel:/i, "");
+  }
+
+  function extractContactPhone(link) {
+    const href = link.getAttribute("href") || "";
+    try {
+      const url = new URL(href, window.location.href);
+      const host = url.hostname.toLowerCase();
+      const path = decodeURIComponent(url.pathname || "");
+
+      if (host.indexOf("wa.me") >= 0) return "+" + path.replace(/[^\d]/g, "");
+      if (host.indexOf("t.me") >= 0) return path.replace(/[^\d+]/g, "");
+      if (url.protocol === "viber:") return url.searchParams.get("number") || "";
+    } catch (_err) {
+      // fall back to text/href parsing below
+    }
+
+    const numberMatch = decodeURIComponent(href).match(/\+?\d[\d\s().-]{7,}/);
+    return numberMatch ? numberMatch[0] : link.textContent || "";
+  }
+
+  function getMessengerSource(link) {
+    const href = (link.getAttribute("href") || "").toLowerCase();
+    const label = (link.getAttribute("aria-label") || link.textContent || "").toLowerCase();
+    const value = href + " " + label;
+
+    if (value.indexOf("wa.me") >= 0 || value.indexOf("whatsapp") >= 0) return "whatsapp_click";
+    if (value.indexOf("viber") >= 0) return "viber_click";
+    if (value.indexOf("t.me") >= 0 || value.indexOf("telegram") >= 0 || value.indexOf("tg:") >= 0) return "telegram_click";
+    return "";
+  }
+
+  function messengerLeadName(source) {
+    if (source === "whatsapp_click") return "WhatsApp з сайту";
+    if (source === "viber_click") return "Viber з сайту";
+    if (source === "telegram_click") return "Telegram з сайту";
+    return "Клік з сайту";
   }
 
   async function registerPhoneClick(link) {
@@ -438,6 +477,34 @@
   document.querySelectorAll('a[href^="tel:"]').forEach(function (link) {
     link.addEventListener("click", function () {
       registerPhoneClick(link);
+    });
+  });
+
+  async function registerMessengerClick(link) {
+    const source = getMessengerSource(link);
+    if (!source) return;
+
+    const now = Date.now();
+    const lastAt = Number(link.dataset.lastLeadflowMessengerAt || 0);
+    if (now - lastAt < 10000) return;
+    link.dataset.lastLeadflowMessengerAt = String(now);
+
+    try {
+      await sendLead({
+        source: source,
+        intent: "call",
+        name: messengerLeadName(source),
+        phone: normalizePhoneForCrm(extractContactPhone(link)),
+        email: ""
+      });
+    } catch (error) {
+      console.warn("Не вдалося зареєструвати клік по месенджеру", error);
+    }
+  }
+
+  document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"], a[href^="viber:"], a[href*="t.me"], a[href^="tg:"]').forEach(function (link) {
+    link.addEventListener("click", function () {
+      registerMessengerClick(link);
     });
   });
 
