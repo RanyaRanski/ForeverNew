@@ -169,6 +169,20 @@
     return str.slice(0, maxLen || 250);
   }
 
+  function cleanMultilineText(value, maxLen) {
+    const str = String(value || "")
+      .replace(/\r\n?/g, "\n")
+      .replace(/[\u0000-\u0009\u000b-\u001f\u007f]/g, " ")
+      .replace(/[<>]/g, "")
+      .split("\n")
+      .map(function (line) {
+        return line.replace(/\s+/g, " ").trim();
+      })
+      .filter(Boolean)
+      .join("\n");
+    return str.slice(0, maxLen || 1000);
+  }
+
   function isRateLimited() {
     try {
       const lastAt = Number(localStorage.getItem("forever_lead_last_at") || 0);
@@ -271,13 +285,19 @@
       : (source === "whatsapp_click" || source === "viber_click" || source === "telegram_click")
       ? "Клік по месенджеру на сайті Forever Living"
       : "Нова заявка з сайту Forever Living";
-    const comment = [
+    const extraCommentLines = Array.isArray(lead.commentLines)
+      ? lead.commentLines.map(function (line) { return cleanText(line, 220); }).filter(Boolean)
+      : [];
+    const extraComment = cleanMultilineText(lead.comment, 600);
+    const commentLines = [
       leadTitle,
       "Дата заявки: " + submittedAt,
       "Джерело: " + sourceLabel,
       "Намір: " + intentLabel,
       "Сторінка: " + page
-    ].join("\n");
+    ].concat(extraCommentLines);
+    if (extraComment) commentLines.push(extraComment);
+    const comment = commentLines.join("\n");
 
     const payload = {
       name: cleanText(lead.name, 80) || "Без імені",
@@ -285,7 +305,7 @@
       email: cleanText(lead.email, 120) || null,
       type: leadType,
       status: "Новий",
-      comment: cleanText(comment, 1000)
+      comment: cleanMultilineText(comment, 1400)
     };
 
     const client = getSupabaseClient();
@@ -459,57 +479,182 @@
     return "Клік з сайту";
   }
 
-  async function registerPhoneClick(link) {
-    const now = Date.now();
-    const lastAt = Number(link.dataset.lastLeadflowCallAt || 0);
-    if (now - lastAt < 10000) return;
-    link.dataset.lastLeadflowCallAt = String(now);
+  function contactActionLabel(source) {
+    if (source === "phone_click") return "дзвінок";
+    if (source === "whatsapp_click") return "WhatsApp";
+    if (source === "viber_click") return "Viber";
+    if (source === "telegram_click") return "Telegram";
+    return "контакт";
+  }
 
-    const phone = normalizePhoneForCrm(link.getAttribute("href") || link.textContent || "");
+  function contactLeadName(source) {
+    if (source === "phone_click") return "Дзвінок з сайту";
+    return messengerLeadName(source);
+  }
+
+  function getContactClickSource(link) {
+    const href = (link.getAttribute("href") || "").toLowerCase();
+    if (href.indexOf("tel:") === 0) return "phone_click";
+    return getMessengerSource(link);
+  }
+
+  function getTargetContact(link, source) {
+    if (source === "phone_click") {
+      return normalizePhoneForCrm(link.getAttribute("href") || link.textContent || "");
+    }
+    return normalizePhoneForCrm(extractContactPhone(link));
+  }
+
+  let contactCaptureModal = null;
+  let pendingContactAction = null;
+
+  function getContactCaptureModal() {
+    if (contactCaptureModal) return contactCaptureModal;
+
+    const backdrop = document.createElement("div");
+    backdrop.className = "lead-capture-backdrop";
+    backdrop.setAttribute("hidden", "");
+    backdrop.innerHTML = [
+      '<form class="lead-capture-modal" data-lead-capture-form novalidate>',
+      '  <button class="lead-capture-close" type="button" aria-label="Закрити" data-lead-capture-close>&times;</button>',
+      '  <p class="lead-capture-kicker">Швидкий контакт</p>',
+      '  <h2 class="lead-capture-title" data-lead-capture-title>Залиште номер</h2>',
+      '  <p class="lead-capture-copy" data-lead-capture-copy>Запишемо звернення в CRM і відкриємо контакт.</p>',
+      '  <label class="lead-capture-field">',
+      '    <span>Ваш номер телефону</span>',
+      '    <input class="lead-capture-input" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+380..." required />',
+      '  </label>',
+      '  <p class="lead-capture-error" data-lead-capture-error aria-live="polite"></p>',
+      '  <button class="lead-capture-submit" type="submit">Продовжити</button>',
+      '  <p class="lead-capture-consent">Натискаючи кнопку, ви погоджуєтесь на обробку номера для зв&apos;язку.</p>',
+      '</form>'
+    ].join("");
+
+    document.body.appendChild(backdrop);
+
+    const modal = {
+      backdrop: backdrop,
+      form: backdrop.querySelector("[data-lead-capture-form]"),
+      title: backdrop.querySelector("[data-lead-capture-title]"),
+      copy: backdrop.querySelector("[data-lead-capture-copy]"),
+      input: backdrop.querySelector("input[name='phone']"),
+      error: backdrop.querySelector("[data-lead-capture-error]"),
+      submit: backdrop.querySelector(".lead-capture-submit"),
+      closeButtons: backdrop.querySelectorAll("[data-lead-capture-close]")
+    };
+
+    modal.hide = function () {
+      pendingContactAction = null;
+      backdrop.setAttribute("hidden", "");
+      document.body.classList.remove("lead-capture-open");
+      modal.error.textContent = "";
+      modal.submit.disabled = false;
+      modal.submit.textContent = "Продовжити";
+    };
+
+    backdrop.addEventListener("click", function (event) {
+      if (event.target === backdrop) modal.hide();
+    });
+
+    modal.closeButtons.forEach(function (button) {
+      button.addEventListener("click", modal.hide);
+    });
+
+    modal.form.addEventListener("submit", handleContactCaptureSubmit);
+    contactCaptureModal = modal;
+    return contactCaptureModal;
+  }
+
+  function openCapturedContact(href) {
+    if (!href) return;
+    setTimeout(function () {
+      window.location.href = href;
+    }, 80);
+  }
+
+  function openContactCapture(link, source) {
+    const modal = getContactCaptureModal();
+    const actionLabel = contactActionLabel(source);
+    const href = link.getAttribute("href") || "";
+    pendingContactAction = {
+      href: href,
+      source: source,
+      targetContact: getTargetContact(link, source),
+      linkLabel: cleanText(link.getAttribute("aria-label") || link.textContent || "", 120)
+    };
+
+    modal.title.textContent = source === "phone_click"
+      ? "Залиште номер для дзвінка"
+      : "Залиште номер для " + actionLabel;
+    modal.copy.textContent = source === "phone_click"
+      ? "Запишемо ваш номер у CRM і відкриємо набір номера."
+      : "Запишемо ваш номер у CRM і відкриємо " + actionLabel + ".";
+    modal.input.value = "";
+    modal.error.textContent = "";
+    modal.submit.disabled = false;
+    modal.submit.textContent = "Продовжити";
+    modal.backdrop.removeAttribute("hidden");
+    document.body.classList.add("lead-capture-open");
+
+    setTimeout(function () {
+      modal.input.focus();
+    }, 40);
+  }
+
+  async function handleContactCaptureSubmit(event) {
+    event.preventDefault();
+    const modal = getContactCaptureModal();
+    const action = pendingContactAction;
+    if (!action) return;
+
+    const customerPhone = normalizePhoneForCrm(modal.input.value);
+    if (!customerPhone || !PHONE_RE.test(customerPhone)) {
+      modal.error.textContent = "Введіть коректний номер телефону.";
+      modal.input.focus();
+      return;
+    }
+
+    modal.error.textContent = "";
+    modal.submit.disabled = true;
+    modal.submit.textContent = "Зберігаємо...";
+
     try {
       await sendLead({
-        source: "phone_click",
+        source: action.source,
         intent: "call",
-        name: "Дзвінок з сайту",
-        phone: phone,
-        email: ""
+        name: contactLeadName(action.source),
+        phone: customerPhone,
+        email: "",
+        commentLines: [
+          "Номер клієнта: " + customerPhone,
+          "Канал кнопки: " + contactActionLabel(action.source),
+          action.targetContact ? "Кнопка відкриває: " + action.targetContact : "",
+          action.linkLabel ? "Текст кнопки: " + action.linkLabel : ""
+        ]
       });
+      modal.hide();
+      toast("Дякуємо! Контакт збережено в CRM.", "success");
+      openCapturedContact(action.href);
     } catch (error) {
-      console.warn("Не вдалося зареєструвати клік по телефону", error);
+      console.warn("Не вдалося зберегти контакт перед відкриттям месенджера", error);
+      modal.error.textContent = "Не вдалося зберегти номер у CRM. Спробуйте ще раз.";
+      modal.submit.disabled = false;
+      modal.submit.textContent = "Продовжити";
     }
   }
 
-  document.querySelectorAll('a[href^="tel:"]').forEach(function (link) {
-    link.addEventListener("click", function () {
-      registerPhoneClick(link);
-    });
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape" && contactCaptureModal && !contactCaptureModal.backdrop.hasAttribute("hidden")) {
+      contactCaptureModal.hide();
+    }
   });
 
-  async function registerMessengerClick(link) {
-    const source = getMessengerSource(link);
-    if (!source) return;
-
-    const now = Date.now();
-    const lastAt = Number(link.dataset.lastLeadflowMessengerAt || 0);
-    if (now - lastAt < 10000) return;
-    link.dataset.lastLeadflowMessengerAt = String(now);
-
-    try {
-      await sendLead({
-        source: source,
-        intent: "call",
-        name: messengerLeadName(source),
-        phone: normalizePhoneForCrm(extractContactPhone(link)),
-        email: ""
-      });
-    } catch (error) {
-      console.warn("Не вдалося зареєструвати клік по месенджеру", error);
-    }
-  }
-
-  document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"], a[href^="viber:"], a[href*="t.me"], a[href^="tg:"]').forEach(function (link) {
-    link.addEventListener("click", function () {
-      registerMessengerClick(link);
+  document.querySelectorAll('a[href^="tel:"], a[href*="wa.me"], a[href*="whatsapp"], a[href^="viber:"], a[href*="t.me"], a[href^="tg:"]').forEach(function (link) {
+    link.addEventListener("click", function (event) {
+      const source = getContactClickSource(link);
+      if (!source) return;
+      event.preventDefault();
+      openContactCapture(link, source);
     });
   });
 
