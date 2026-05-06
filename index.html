@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; form-action 'self'; script-src 'self' 'sha256-MNvT5YqA799Q4mJoIGW8cBxBCjGpwML5D2+Cy3+THFU='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://aloe-hub.flpuretail.com; media-src 'self'; connect-src 'self' https://evqmticivailwbocynub.supabase.co wss://evqmticivailwbocynub.supabase.co; worker-src 'self' blob:" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>Forever Living — Натуральна сила алое вера для життя та бізнесу</title>
   <meta name="description" content="Натуральні продукти Forever Living на основі алое вера: здоров'я, краса, харчування. Стань FBO-партнером і побудуй власний бізнес з лідером галузі з 1978 року." />
   <meta name="robots" content="index, follow" />
@@ -524,19 +526,19 @@
               </div>
               <p class="hero-response-note">Відповідь гарантуємо протягом 30 хвилин</p>
 
-              <div class="hero-lead-form">
+              <form class="hero-lead-form" data-lead-form data-lead-source="hero_form" data-lead-intent="products" data-require-name="true" novalidate>
                 <p>⚡ Отримати безкоштовну консультацію</p>
                 <div class="hero-lead-row">
-                  <input type="text" id="heroName" placeholder="Ваше ім'я" autocomplete="given-name" />
-                  <input type="tel" id="heroPhone" placeholder="+380 (__)___-__-__" autocomplete="tel" inputmode="tel" />
-                  <button class="hero-lead-btn" onclick="submitHeroForm()">Надіслати</button>
+                  <input type="text" id="heroName" name="name" placeholder="Ваше ім'я" autocomplete="given-name" />
+                  <input type="tel" id="heroPhone" name="phone" placeholder="+380 (__)___-__-__" autocomplete="tel" inputmode="tel" />
+                  <button type="submit" class="hero-lead-btn">Надіслати</button>
                 </div>
                 <label class="lead-consent" for="heroConsent">
-                  <input type="checkbox" id="heroConsent" />
+                  <input type="checkbox" id="heroConsent" name="consent" />
                   <small class="lead-consent-text">Я погоджуюся з <a href="privacy-policy.html" target="_blank" rel="noopener noreferrer">Політикою конфіденційності</a> та <a href="terms.html" target="_blank" rel="noopener noreferrer">Умовами користування</a></small>
                 </label>
                 <p class="hero-lead-note">🔒 Без спаму. Відповідь протягом 30 хвилин.</p>
-              </div>
+              </form>
             </div>
           </div>
         </div>
@@ -644,22 +646,22 @@
             Персональний супровід сертифікованого фахівця з харчування. Розберемо ваші цілі,
             складемо план та підберемо продукти Forever, які працюватимуть саме на вас.
           </p>
-          <div class="nutrition-lead">
+          <form class="nutrition-lead" data-lead-form data-lead-source="nutrition_form" data-lead-intent="nutrition" novalidate>
             <h4 class="nutrition-lead-title">Консультація нутриціолога</h4>
             <p class="nutrition-lead-sub">Залиште номер - передзвонимо і підберемо продукти саме для вас.</p>
             <div class="nutrition-lead-form">
-              <input type="tel" id="nutritionPhone" placeholder="+380 (__)___-__-__" inputmode="tel" autocomplete="tel" />
-              <button type="button" class="nutrition-lead-btn" onclick="submitNutritionLeadForm()">Хочу консультацію</button>
+              <input type="tel" id="nutritionPhone" name="phone" placeholder="+380 (__)___-__-__" inputmode="tel" autocomplete="tel" />
+              <button type="submit" class="nutrition-lead-btn">Хочу консультацію</button>
             </div>
             <label class="lead-consent" for="nutritionConsent">
-              <input type="checkbox" id="nutritionConsent" />
+              <input type="checkbox" id="nutritionConsent" name="consent" />
               <small class="lead-consent-text">Я погоджуюся з <a href="privacy-policy.html" target="_blank" rel="noopener noreferrer">Політикою конфіденційності</a> та <a href="terms.html" target="_blank" rel="noopener noreferrer">Умовами користування</a></small>
             </label>
             <div class="nutrition-lead-perks">
               <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Без спаму</span>
               <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Відповідь за 30 хв</span>
             </div>
-          </div>
+          </form>
         </div>
         <div class="nutrition-right">
           <div class="nutrition-topic">
@@ -688,14 +690,14 @@
           <span class="eyebrow eyebrow-mint">Бізнес-можливості / FBO</span>
           <h2>Стань <span class="italic accent-mint">партнером</span> Forever Living.</h2>
           <p>Понад 9 мільйонів партнерів у світі вже обрали свободу та фінансову незалежність з нашою перевіреною бізнес-моделлю.</p>
-          <div class="nutrition-lead">
+          <form class="nutrition-lead" data-lead-form data-lead-source="business_form" data-lead-intent="business" novalidate>
             <p class="nutrition-lead-sub">Залиште номер - передзвонимо і підберемо продукти саме для вас.</p>
             <div class="nutrition-lead-form">
-              <input type="tel" id="businessPhone" placeholder="+380 (__)___-__-__" inputmode="tel" autocomplete="tel" />
-              <button type="button" class="nutrition-lead-btn" onclick="submitBusinessLeadForm()">Хочу консультацію</button>
+              <input type="tel" id="businessPhone" name="phone" placeholder="+380 (__)___-__-__" inputmode="tel" autocomplete="tel" />
+              <button type="submit" class="nutrition-lead-btn">Хочу консультацію</button>
             </div>
             <label class="lead-consent" for="businessConsent">
-              <input type="checkbox" id="businessConsent" />
+              <input type="checkbox" id="businessConsent" name="consent" />
               <small class="lead-consent-text">Я погоджуюся з <a href="privacy-policy.html" target="_blank" rel="noopener noreferrer">Політикою конфіденційності</a> та <a href="terms.html" target="_blank" rel="noopener noreferrer">Умовами користування</a></small>
             </label>
             <div class="nutrition-lead-perks">
@@ -703,7 +705,7 @@
               <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Відповідь за 30 хв</span>
               <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Безкоштовно</span>
             </div>
-          </div>
+          </form>
         </div>
         <div class="business-intro-image">
           <img src="images/business-lifestyle.jpg" alt="Партнерка Forever Living працює з ноутбуком" loading="lazy" />
@@ -853,9 +855,9 @@
 
             <div class="contact-form-wrap">
               <div class="contact-intent-tabs">
-                <button class="intent-tab active" onclick="setIntent(this, 'products')">🌿 Хочу продукти</button>
-                <button class="intent-tab" onclick="setIntent(this, 'business')">💼 Цікавить бізнес</button>
-                <button class="intent-tab" onclick="setIntent(this, 'nutrition')">🥗 Консультація</button>
+                <button type="button" class="intent-tab active" data-intent-value="products">🌿 Хочу продукти</button>
+                <button type="button" class="intent-tab" data-intent-value="business">💼 Цікавить бізнес</button>
+                <button type="button" class="intent-tab" data-intent-value="nutrition">🥗 Консультація</button>
               </div>
 
               <form id="contactForm" class="contact-form" novalidate>
@@ -918,97 +920,7 @@
   <div id="toastRoot" class="toast-root" aria-live="polite"></div>
 
   <script src="js/vendor/supabase.js?v=20260505-crm"></script>
-  <script src="js/main.js?v=20260505-crm-calls"></script>
-  <script>
-    // ===== HERO FORM =====
-    async function submitHeroForm() {
-      const name = document.getElementById("heroName").value.trim();
-      const phone = document.getElementById("heroPhone").value.trim();
-      const consent = !!document.getElementById("heroConsent")?.checked;
-      if (!window.ForeverLeads || typeof window.ForeverLeads.submitLead !== "function") {
-        showToast("Сервіс заявок тимчасово недоступний.", "error");
-        return;
-      }
-      const ok = await window.ForeverLeads.submitLead({
-        source: "hero_form",
-        intent: "products",
-        name: name,
-        phone: phone,
-        consent: consent,
-        requireName: true,
-        honey: "",
-      });
-      if (ok) {
-        document.getElementById("heroName").value = "";
-        document.getElementById("heroPhone").value = "";
-        document.getElementById("heroConsent").checked = false;
-      }
-    }
-
-    // ===== NUTRITION LEAD FORM =====
-    async function submitNutritionLeadForm() {
-      const phone = document.getElementById("nutritionPhone").value.trim();
-      const consent = !!document.getElementById("nutritionConsent")?.checked;
-      if (!window.ForeverLeads || typeof window.ForeverLeads.submitLead !== "function") {
-        showToast("Сервіс заявок тимчасово недоступний.", "error");
-        return;
-      }
-      const ok = await window.ForeverLeads.submitLead({
-        source: "nutrition_form",
-        intent: "nutrition",
-        name: "",
-        phone: phone,
-        consent: consent,
-        requireName: false,
-        honey: "",
-      });
-      if (ok) {
-        document.getElementById("nutritionPhone").value = "";
-        document.getElementById("nutritionConsent").checked = false;
-      }
-    }
-
-    // ===== BUSINESS LEAD FORM =====
-    async function submitBusinessLeadForm() {
-      const phone = document.getElementById("businessPhone").value.trim();
-      const consent = !!document.getElementById("businessConsent")?.checked;
-      if (!window.ForeverLeads || typeof window.ForeverLeads.submitLead !== "function") {
-        showToast("Сервіс заявок тимчасово недоступний.", "error");
-        return;
-      }
-      const ok = await window.ForeverLeads.submitLead({
-        source: "business_form",
-        intent: "business",
-        name: "",
-        phone: phone,
-        consent: consent,
-        requireName: false,
-        honey: "",
-      });
-      if (ok) {
-        document.getElementById("businessPhone").value = "";
-        document.getElementById("businessConsent").checked = false;
-      }
-    }
-
-    // ===== INTENT TABS =====
-    function setIntent(btn, value) {
-      document.querySelectorAll(".intent-tab").forEach((t) => t.classList.remove("active"));
-      btn.classList.add("active");
-      document.getElementById("intentField").value = value;
-    }
-
-    // ===== TOAST helper =====
-    function showToast(msg, type) {
-      const root = document.getElementById("toastRoot");
-      if (!root) return;
-      const t = document.createElement("div");
-      t.className = "toast" + (type === "success" ? " success" : "");
-      t.textContent = msg;
-      root.appendChild(t);
-      setTimeout(() => t.remove(), 4000);
-    }
-  </script>
+  <script src="js/main.js?v=20260506-security"></script>
 </body>
 </html>
 

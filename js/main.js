@@ -5,7 +5,6 @@
 (function () {
   const SUPABASE_URL = "https://evqmticivailwbocynub.supabase.co";
   const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_XHjHSPdrUvKw3MO0jlSi8w_I0z90XJF";
-  const LEADS_ENDPOINT = SUPABASE_URL + "/rest/v1/leads";
   const LEAD_RATE_LIMIT_MS = 20000;
   const MIN_FILL_TIME_MS = 1200;
   const FORM_LOAD_TS = Date.now();
@@ -27,6 +26,8 @@
     phone_click: "Клік по номеру телефону",
     site: "Сайт"
   };
+  const ALLOWED_INTENTS = Object.keys(INTENT_LABELS);
+  const ALLOWED_SOURCES = Object.keys(SOURCE_LABELS);
 
   // ---- Mobile menu toggle ----
   const header = document.getElementById("siteHeader");
@@ -158,6 +159,7 @@
 
   function cleanText(value, maxLen) {
     const str = String(value || "")
+      .replace(/[\u0000-\u001f\u007f]/g, " ")
       .replace(/\s+/g, " ")
       .replace(/[<>]/g, "")
       .trim();
@@ -213,6 +215,20 @@
     return map[key] || key || "Не вказано";
   }
 
+  function normalizeChoice(value, allowedValues, fallback) {
+    const key = cleanText(value, 40);
+    return allowedValues.indexOf(key) >= 0 ? key : fallback;
+  }
+
+  function getSafePageUrl() {
+    try {
+      const url = new URL(window.location.href);
+      return url.origin + url.pathname;
+    } catch (_err) {
+      return cleanText(window.location.pathname || "", 180);
+    }
+  }
+
   function formatLeadDate(date) {
     return date.toLocaleString("uk-UA", {
       day: "2-digit",
@@ -223,13 +239,29 @@
     });
   }
 
+  async function notifyTelegramLead(lead, meta) {
+    try {
+      const response = await fetch("/api/telegram-lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        keepalive: true,
+        body: JSON.stringify({ lead: lead, meta: meta || {} })
+      });
+      if (!response.ok) {
+        console.warn("Telegram-сповіщення не було прийняте endpoint", response.status);
+      }
+    } catch (error) {
+      console.warn("Не вдалося відправити Telegram-сповіщення", error);
+    }
+  }
+
   async function sendLead(lead) {
-    const leadIntent = cleanText(lead.intent, 40) || "general";
+    const leadIntent = normalizeChoice(lead.intent, ALLOWED_INTENTS, "general");
     const leadType = leadIntent === "business" ? "бізнес" : (leadIntent === "call" ? "дзвінок" : "консультація");
-    const source = cleanText(lead.source, 40) || "site";
+    const source = normalizeChoice(lead.source, ALLOWED_SOURCES, "site");
     const intentLabel = labelFromMap(INTENT_LABELS, leadIntent);
     const sourceLabel = labelFromMap(SOURCE_LABELS, source);
-    const page = window.location.href;
+    const page = getSafePageUrl();
     const submittedAt = formatLeadDate(new Date());
     const comment = [
       leadIntent === "call" ? "Клік по номеру телефону на сайті Forever Living" : "Нова заявка з сайту Forever Living",
@@ -245,7 +277,7 @@
       email: cleanText(lead.email, 120) || null,
       type: leadType,
       status: "Новий",
-      comment: comment
+      comment: cleanText(comment, 1000)
     };
 
     const client = getSupabaseClient();
@@ -253,6 +285,13 @@
 
     const { error } = await client.from("leads").insert(payload);
     if (error) throw new Error(error.message || "submission_failed");
+
+    notifyTelegramLead(payload, {
+      sourceLabel: sourceLabel,
+      intentLabel: intentLabel,
+      page: page,
+      submittedAt: new Date().toISOString()
+    });
   }
 
   async function submitLead(lead) {
@@ -316,6 +355,61 @@
   window.ForeverLeads = {
     submitLead: submitLead,
   };
+
+  function getFormValue(form, selector) {
+    const el = form.querySelector(selector);
+    return el && typeof el.value === "string" ? el.value : "";
+  }
+
+  function getFormChecked(form, selector) {
+    const el = form.querySelector(selector);
+    return !!(el && el.checked);
+  }
+
+  function bindConfiguredLeadForms() {
+    document.querySelectorAll("[data-lead-form]").forEach(function (form) {
+      form.addEventListener("submit", async function (event) {
+        event.preventDefault();
+        if (!window.ForeverLeads || typeof window.ForeverLeads.submitLead !== "function") {
+          toast("Сервіс заявок тимчасово недоступний.", "error", form);
+          return;
+        }
+
+        const ok = await window.ForeverLeads.submitLead({
+          source: form.getAttribute("data-lead-source") || "site",
+          intent: form.getAttribute("data-lead-intent") || "general",
+          name: getFormValue(form, "input[name='name']"),
+          phone: getFormValue(form, "input[name='phone']"),
+          email: getFormValue(form, "input[name='email']"),
+          consent: getFormChecked(form, "input[name='consent']"),
+          requireName: form.getAttribute("data-require-name") === "true",
+          honey: getFormValue(form, "input[name='_honey']")
+        });
+
+        if (ok && typeof form.reset === "function") {
+          form.reset();
+        }
+      });
+    });
+  }
+
+  function bindIntentTabs() {
+    document.querySelectorAll("[data-intent-value]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        const value = normalizeChoice(button.getAttribute("data-intent-value"), ALLOWED_INTENTS, "products");
+        document.querySelectorAll(".intent-tab").forEach(function (tab) {
+          tab.classList.remove("active");
+        });
+        button.classList.add("active");
+
+        const intentField = document.getElementById("intentField");
+        if (intentField) intentField.value = value;
+      });
+    });
+  }
+
+  bindConfiguredLeadForms();
+  bindIntentTabs();
 
   function normalizePhoneForCrm(phone) {
     return cleanText(phone, 40).replace(/^tel:/i, "");
