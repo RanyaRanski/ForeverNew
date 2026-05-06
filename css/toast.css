@@ -81,15 +81,6 @@
   background: rgba(48, 92, 57, 0.14);
 }
 
-.lead-capture-kicker {
-  color: #377e47;
-  font-size: 0.68rem;
-  font-weight: 800;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  margin-bottom: 0.55rem;
-}
-
 .lead-capture-title {
   max-width: 22rem;
   color: #112914;
@@ -169,6 +160,13 @@
   font-size: 0.74rem;
   line-height: 1.45;
   margin-top: 0.8rem;
+}
+
+.lead-capture-consent a {
+  color: #2f6c3d;
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 0.16em;
 }
 
 @media (max-width: 767px) {

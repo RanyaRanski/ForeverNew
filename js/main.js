@@ -517,16 +517,15 @@
     backdrop.innerHTML = [
       '<form class="lead-capture-modal" data-lead-capture-form novalidate>',
       '  <button class="lead-capture-close" type="button" aria-label="Закрити" data-lead-capture-close>&times;</button>',
-      '  <p class="lead-capture-kicker">Швидкий контакт</p>',
       '  <h2 class="lead-capture-title" data-lead-capture-title>Залиште номер</h2>',
-      '  <p class="lead-capture-copy" data-lead-capture-copy>Запишемо звернення в CRM і відкриємо контакт.</p>',
+      '  <p class="lead-capture-copy" data-lead-capture-copy>Ми зафіксуємо ваш номер і одразу перекинемо вас до менеджера.</p>',
       '  <label class="lead-capture-field">',
       '    <span>Ваш номер телефону</span>',
       '    <input class="lead-capture-input" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+380..." required />',
       '  </label>',
       '  <p class="lead-capture-error" data-lead-capture-error aria-live="polite"></p>',
       '  <button class="lead-capture-submit" type="submit">Продовжити</button>',
-      '  <p class="lead-capture-consent">Натискаючи кнопку, ви погоджуєтесь на обробку номера для зв&apos;язку.</p>',
+      '  <p class="lead-capture-consent">Я погоджуюсь на обробку персональних даних для зв&apos;язку згідно з <a href="privacy-policy.html" target="_blank" rel="noopener">Політикою конфіденційності</a>.</p>',
       '</form>'
     ].join("");
 
@@ -572,6 +571,22 @@
     }, 80);
   }
 
+  function contactCaptureCopy(source) {
+    if (source === "whatsapp_click") {
+      return "Ми зафіксуємо ваш номер і одразу перекинемо вас у WhatsApp для зв’язку з менеджером.";
+    }
+    if (source === "viber_click") {
+      return "Ми зафіксуємо ваш номер і одразу перекинемо вас у Viber для зв’язку з менеджером.";
+    }
+    if (source === "telegram_click") {
+      return "Ми зафіксуємо ваш номер і одразу перекинемо вас у Telegram для зв’язку з менеджером.";
+    }
+    if (source === "phone_click") {
+      return "Ми зафіксуємо ваш номер і одразу відкриємо дзвінок для зв’язку з менеджером.";
+    }
+    return "Ми зафіксуємо ваш номер і одразу перекинемо вас до менеджера.";
+  }
+
   function openContactCapture(link, source) {
     const modal = getContactCaptureModal();
     const actionLabel = contactActionLabel(source);
@@ -586,9 +601,7 @@
     modal.title.textContent = source === "phone_click"
       ? "Залиште номер для дзвінка"
       : "Залиште номер для " + actionLabel;
-    modal.copy.textContent = source === "phone_click"
-      ? "Запишемо ваш номер у CRM і відкриємо набір номера."
-      : "Запишемо ваш номер у CRM і відкриємо " + actionLabel + ".";
+    modal.copy.textContent = contactCaptureCopy(source);
     modal.input.value = "";
     modal.error.textContent = "";
     modal.submit.disabled = false;
